@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+html,
+body {
+  font-size: 62.5%; /* 1rem = 10px */
+  font-family: var(--font-primary);
+  background-color: var(--main-bg-color);
+  color: var(--primary-txt-color);
+  overflow-x: hidden;
+}
