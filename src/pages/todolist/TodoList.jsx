@@ -1,3 +1,3 @@
 export default function TodoList() {
-  return;
+  return <div className="bg-[#23272E] w-screen h-screen"></div>;
 }
