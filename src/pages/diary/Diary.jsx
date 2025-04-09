@@ -1,3 +1,3 @@
 export default function Diary() {
-  return;
+  return <p>fdsaf</p>;
 }
