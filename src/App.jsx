@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import TodoList from "./pages/todolist/TodoList";
+import LearningPlan from "./pages/learning-plan/LearningPlan";
+import Diary from "./pages/diary/Diary";
+import Feedback from "./pages/feedback/Feedback";
 
 export default function App() {
   const [darkmod, setDarkMod] = useState(false);
@@ -23,6 +26,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/todolist" element={<TodoList />} />
+          <Route path="/learningplan" element={<LearningPlan />} />
+          <Route path="/diary" element={<Diary />} />
+          <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </BrowserRouter>
     </div>
