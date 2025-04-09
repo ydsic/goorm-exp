@@ -1,2 +1,22 @@
 :root {
+  --light-bg-color: #ffffff;
+  --light-aside-color: rgb(247, 247, 250);
+  --dark-bg-color: #23272e;
+  --dark-aside-color: rgb(44, 48, 57);
+}
+
+.Theme_Light {
+  --bg-color: var(--light-bg-color);
+  --aside-color: var(--light-aside-color);
+}
+
+.Theme_Dark {
+  --bg-color: var(--dark-bg-color);
+  --aside-color: var(--dark-aside-color);
+}
+
+.btn12345 {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }
