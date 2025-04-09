@@ -10,7 +10,7 @@ export default function Aside() {
         <NavLink to="/todolist">오늘 할 일</NavLink>
         <NavLink to="/learningplan">학습 계획</NavLink>
         <NavLink to="/diary">최근 작성한 배움일기</NavLink>
-        <NavLink to="/feedback">최근 작성한 배움일기</NavLink>
+        <NavLink to="/feedback">상시 피드백</NavLink>
       </div>
     </div>
   );
