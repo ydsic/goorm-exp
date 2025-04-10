@@ -1,10 +1,11 @@
+@import 'pretendard/dist/web/variable/pretendardvariable.css';
 @import "tailwindcss";
+@tailwind utilities;
+
 
 html,
 body {
   font-size: 62.5%; /* 1rem = 10px */
-  font-family: var(--font-primary);
-  background-color: var(--main-bg-color);
-  color: var(--primary-txt-color);
+  font-family: 'Pretendard', sans-serif;
   overflow-x: hidden;
 }
