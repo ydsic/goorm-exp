@@ -6,7 +6,9 @@ export default function TodoList() {
       <div className="w-[300px]">
         <Aside />
       </div>
-      <div>fdsafsd</div>
+      <h1 className="text-2xl">
+        프리텐다드 폰트 적용 완료 🎉
+      </h1>
     </div>
   );
 }
