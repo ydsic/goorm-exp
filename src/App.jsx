@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import TodoList from "./pages/todolist/TodoList";
 import LearningPlan from "./pages/learning-plan/LearningPlan";
 import Diary from "./pages/diary/Diary";
+import DiaryPage from "./pages/diary/DiaryPage";
 import Feedback from "./pages/feedback/Feedback";
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/learningplan" element={<LearningPlan />} />
           <Route path="/diary" element={<Diary />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path="/diarypage" element={<DiaryPage />} />
         </Routes>
       </BrowserRouter>
     </div>

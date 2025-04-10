@@ -2,7 +2,17 @@
   --light-bg-color: #ffffff;
   --light-aside-color: #f7f7fa;
   --dark-bg-color: #23272e;
-  --dark-aside-color: #2c3039;
+  --dark-aside-color: rgb(44, 48, 57);
+  --default-gray: #f7f7fa;
+  --default-blue: #f2f6fe;
+  --border-color-gray: #ececf1;
+  --border-color-blue: #6ea2e8;
+  --txt-color: #525463;
+  --title-txt-color: #2b2d36;
+  --icon-color: #525463;
+  --hover-txt-color: #2b2d36;
+  --hover-icon-color: #2b2d36;
+  --hover-side-bg-color: rgba(205, 206, 214, 0.24);
 }
 
 .Theme_Light {
