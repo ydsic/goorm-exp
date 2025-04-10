@@ -16,7 +16,7 @@ export default function DiaryCard() {
 
   const card_content = {
     title: `React의 Virtual DOM이란?`,
-    subtitle: `Virtual DOM은 실제 DOM을 복제한 가상의 DOM이다. React는 상태가 바뀌면 Virtual DOM에서 먼저 변경을 시뮬레이션하고, 실제 DOM과 비교(diff)해 필요한 부분만 업데이트한다. 이로 인해 성능이 최적화되며, 빠른 렌더링이 가능해진다.`,
+    subtitle: `Virtual DOM은 실제 DOM을 복제한 가상의 DOM이다. React는 상태가 바뀌면 Virtual DOM에서 먼저 변경을 시뮬레이션하고, 실제 DOM과 비교해 필요한 부분만 업데이트한다. 이로 인해 성능이 최적화되며, 빠른 렌더링이 가능해진다.`,
     heart: `3`,
     comment: `4`,
     name: `XXX(프론트엔드 3회차)`,
@@ -24,7 +24,7 @@ export default function DiaryCard() {
   };
 
   return (
-    <NavLink to="/diarypage">
+    <NavLink to="/diarypage" state={card_content}>
       <div className={card_style.card}>
         <div className={card_style.title}>{card_content.title}</div>
         <div className={card_style.subtitle}>{card_content.subtitle}</div>

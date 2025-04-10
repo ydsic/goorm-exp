@@ -22,7 +22,7 @@ export default function DiaryPage() {
               fill="#aaa"
               width="16"
               height="16"
-              class="vapor_components_0_24_0_icon_2de8d vapor_components_0_24_0_icon_md_2de8d"
+              className="vapor_components_0_24_0_icon_2de8d vapor_components_0_24_0_icon_md_2de8d"
               viewBox="0 0 16 16"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
@@ -30,7 +30,7 @@ export default function DiaryPage() {
               <path d="M8.28474 3.13064C8.54411 2.87372 8.54609 2.45519 8.28917 2.19583C8.03226 1.93646 7.61373 1.93448 7.35437 2.1914L2.03416 7.46142C1.73471 7.75804 1.73471 8.24196 2.03416 8.53858L7.35437 13.8086C7.61373 14.0655 8.03226 14.0635 8.28917 13.8042C8.54609 13.5448 8.54411 13.1263 8.28474 12.8694L3.98519 8.61037H13.5145C13.8796 8.61037 14.1755 8.31442 14.1755 7.94935C14.1755 7.58428 13.8796 7.28833 13.5145 7.28833H4.08745L8.28474 3.13064Z"></path>
             </svg>
           </button>
-          <p className="text-[23px] ml-[10px] font-[900] text-[#DDDDE4] tracking-[-3px]">
+          <p className="text-[25px] ml-[10px] font-[900] text-[#DDDDE4] tracking-[-3px]">
             XXX(프론트엔드 3회차)님의 배움일기
           </p>
         </div>
@@ -46,10 +46,19 @@ export default function DiaryPage() {
               <p className="bg-[#5F9DFA29] text-[#81B2FC] px-[10px] py-[7px] rounded-[7px] text-[12px]">
                 구름 EDU 강좌
               </p>
-              <p className="ml-[30px] mt-[7px] text-[#9395A4] text-[11px]">
+              <p className="ml-[25px] mt-[7px] text-[#9395A4] text-[11px]">
                 (3회차) React 기반 프론트엔드 개발자 취업 특화 과정{" "}
               </p>
             </div>
+            <div className="text-[#DDDDE4] text-[12px] font-[700] mt-[15px]">
+              Virtual DOM은 실제 DOM을 복제한 가상의 DOM이다.
+              <br />
+              React는 상태가 바뀌면 Virtual DOM에서 먼저 변경을 시뮬레이션하고,
+              실제 DOM과 비교해 필요한 부분만 업데이트한다.
+              <br />
+              이로 인해 성능이 최적화되며, 빠른 렌더링이 가능해진다.
+            </div>
+            <div className="h-[1px] bg-[#3F434F]" />
           </div>
         </div>
       </div>
