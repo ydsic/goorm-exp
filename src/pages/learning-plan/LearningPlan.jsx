@@ -6,7 +6,9 @@ const LearningPlan = () => {
       <div className="w-[300px]">
         <Aside />
       </div>
-      <div>학습계획 입니다</div>
+      <div>
+        <h1 className="text-2xl">학습계획 입니다</h1>
+      </div>
     </div>
   );
 };
