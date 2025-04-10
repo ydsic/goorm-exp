@@ -6,9 +6,16 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Pretendard', ...defaultTheme.fontFamily.sans],
+        sans: ["Pretendard", ...defaultTheme.fontFamily.sans],
       },
     },
   },
   plugins: [],
+  extend: {
+    colors: {
+      white: "#fff",
+      black: "#000",
+      transparent: "transparent",
+    },
+  },
 };

@@ -1,8 +1,8 @@
 :root {
   --light-bg-color: #ffffff;
-  --light-aside-color: rgb(247, 247, 250);
+  --light-aside-color: #f7f7fa;
   --dark-bg-color: #23272e;
-  --dark-aside-color: rgb(44, 48, 57);
+  --dark-aside-color: #2c3039;
 }
 
 .Theme_Light {
