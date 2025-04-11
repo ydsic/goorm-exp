@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Aside() {
   return (
-    <aside className="w-[300px] bg-[#f7f7fa]  h-full">
+    <aside className="w-[300px] bg-[var(--aside-color)]  h-full">
       <div>
         <NavLink to="/">홈</NavLink>
       </div>
