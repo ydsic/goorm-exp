@@ -1,7 +1,32 @@
+import { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import Aside from "../Aside";
 
 export default function DiaryAdd() {
+  const [title, setTitle] = useState("");
+  const contentRef = useRef(null);
+
+  const handleUpload = () => {
+    const content = contentRef.current?.innerHTML || "";
+    const diaryData = {
+      title,
+      content,
+      time: new Date().toISOString(),
+      hearts: 0,
+      comments: 0,
+    };
+
+    let index = 0;
+    while (localStorage.getItem(`diarystory${index}`)) {
+      index++;
+    }
+
+    localStorage.setItem(`diarystory${index}`, JSON.stringify(diaryData));
+    alert("배움일기가 저장되었습니다!");
+    setTitle("");
+    if (contentRef.current) contentRef.current.innerHTML = "";
+  };
+
   return (
     <>
       <div className="w-screen h-screen flex">
@@ -42,13 +67,18 @@ export default function DiaryAdd() {
               <button className="bg-[#3F434F] px-[15px] py-[10px] text-gray-400 text-[13px] font-[700] rounded-[7px]">
                 임시저장
               </button>
-              <button className="bg-[#5F9DFA] px-[15px] py-[10px] text-white text-[13px] font-[700] rounded-[7px] ml-[10px]">
+              <button
+                onClick={handleUpload}
+                className="bg-[#5F9DFA] px-[15px] py-[10px] text-white text-[13px] font-[700] rounded-[7px] ml-[10px]"
+              >
                 업로드
               </button>
             </div>
           </div>
           <div className="border-1 border-[#52566499] rounded-[7px] mt-[20px] h-[4.3vh]">
             <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               className="outline-none text-[#C3C4CF] text-[13px] font-[500] w-[100%] h-[100%] ml-[15px]"
               placeholder="제목을 작성해 주세요."
             />
@@ -187,8 +217,9 @@ export default function DiaryAdd() {
 
             <div className="text-[#C3C4CF]">
               <div
-                contenteditable="true"
-                class="h-[65vh] focus:outline-none m-[15px]"
+                contentEditable="true"
+                ref={contentRef}
+                className="h-[65vh] focus:outline-none m-[15px] text-[15px]"
               ></div>
             </div>
           </div>

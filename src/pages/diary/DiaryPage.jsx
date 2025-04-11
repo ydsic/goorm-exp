@@ -1,10 +1,28 @@
+import { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import Aside from "../Aside";
 import DiaryData from "./DirayData";
+import React from "react";
 
 export default function DiaryPage() {
   const { id } = useParams();
   const diary = DiaryData[id];
+  const [comment, setComment] = useState("");
+  const [commentList, setCommentList] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(`comments-${id}`);
+    if (saved) setCommentList(JSON.parse(saved));
+  }, [id]);
+
+  const handleSubmit = () => {
+    if (!comment.trim()) return;
+
+    const newComments = [...commentList, comment];
+    setCommentList(newComments);
+    localStorage.setItem(`comments-${id}`, JSON.stringify(newComments));
+    setComment("");
+  };
 
   return (
     <div className="w-screen h-screen flex">
@@ -186,6 +204,8 @@ export default function DiaryPage() {
 
                 <div className="text-[#C3C4CF]">
                   <input
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
                     placeholder="댓글을 남겨보세요"
                     className="w-[76vw] h-[5vh] text-[12px] ml-[10px] outline-none"
                   />
@@ -206,11 +226,30 @@ export default function DiaryPage() {
                   </svg>
                   초기화
                 </button>
-                <button className="bg-[#5F9DFA] px-[13px] py-[7px] rounded-[7px] text-[13px] font-[900] text-white">
+                <button
+                  onClick={handleSubmit}
+                  className="bg-[#5F9DFA] px-[13px] py-[7px] rounded-[7px] text-[13px] font-[900] text-white"
+                >
                   댓글 등록하기
                 </button>
               </div>
             </div>
+
+            {commentList.length > 0 &&
+              commentList.map((cmt, idx) => (
+                <div
+                  key={idx}
+                  className="text-[#DDDDE4] text-[14px] font-[600] my-[20px]"
+                >
+                  <div className="flex items-center">
+                    <div className="w-[30px] h-[30px] bg-gray-500 rounded-full flex justify-center items-center">
+                      프3
+                    </div>
+                    <p className="ml-[10px]">000(프론트엔드 3회차)</p>
+                  </div>
+                  <p className="mt-[10px]">{cmt}</p>
+                </div>
+              ))}
           </div>
         </div>
         <div className="flex justify-between">

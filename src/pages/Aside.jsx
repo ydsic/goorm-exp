@@ -12,15 +12,17 @@ import EducationIcon from "../assets/svg/sideIcon-edu.svg";
 export default function Aside() {
   return (
     <aside className="w-[30rem] h-screen flex flex-col items-start justify-start bg-[var(--aside-color)] border-r border-[var(--border-color-gray)] p-5 gap-1.5 box-border">
-
       {/* 상단 라벨 */}
       <div className="flex items-center gap-2 text-[1.2rem] font-medium text-[var(--gray-50)] leading-[1.6rem] tracking-tight px-1">
         <div className="w-5 h-5">
-          <img src={EducationIcon} alt="aside-header-icon" className="w-full h-full object-contain" />
+          <img
+            src={EducationIcon}
+            alt="aside-header-icon"
+            className="w-full h-full object-contain"
+          />
         </div>
         EDUCATION
       </div>
-
 
       {/* 로고 영역 */}
       <div className="w-full flex items-center gap-3 p-5">
@@ -52,9 +54,10 @@ function NavItem({ to, icon, label }) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `w-full h-[4.5rem] px-4 py-3 flex items-center gap-4 text-[1.6rem] font-semibold leading-[2.4rem] rounded-xl transition-all duration-200 ${isActive
-          ? "bg-[var(--hover-side-bg-color)] text-[var(--hover-txt-color)]"
-          : "text-[var(--icon-color)] hover:bg-[var(--hover-side-bg-color)] hover:text-[var(--hover-txt-color)]"
+        `w-full h-[4.5rem] px-4 py-3 flex items-center gap-4 text-[1.6rem] font-semibold leading-[2.4rem] rounded-xl transition-all duration-200 ${
+          isActive
+            ? "bg-[var(--hover-side-bg-color)] text-[var(--hover-txt-color)]"
+            : "text-[var(--icon-color)] hover:bg-[var(--hover-side-bg-color)] hover:text-[var(--hover-txt-color)]"
         }`
       }
     >
