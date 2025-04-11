@@ -1,17 +1,17 @@
 :root {
   --light-bg-color: #ffffff;
-  --light-aside-color: rgb(247, 247, 250);
+  --light-aside-color: #f7f7fa;
   --dark-bg-color: #23272e;
   --dark-aside-color: rgb(44, 48, 57);
-  --default-gray: #F7F7FA;
-  --default-blue: #F2F6FE;
-  --border-color-gray: #ECECF1;
-  --border-color-blue: #6EA2E8;
+  --default-gray: #f7f7fa;
+  --default-blue: #f2f6fe;
+  --border-color-gray: #ececf1;
+  --border-color-blue: #6ea2e8;
   --txt-color: #525463;
-  --title-txt-color: #2B2D36; 
+  --title-txt-color: #2b2d36;
   --icon-color: #525463;
-  --hover-txt-color: #2B2D36;
-  --hover-icon-color: #2B2D36;
+  --hover-txt-color: #2b2d36;
+  --hover-icon-color: #2b2d36;
   --hover-side-bg-color: rgba(205, 206, 214, 0.24);
 }
 
