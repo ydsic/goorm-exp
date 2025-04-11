@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import Button from "../../pages/learning-plan/Button";
 
-const SubPageHeader = ({ activeTab = "plan" }) => {
+const SubPageHeader = ({ activeTab = "plan", onClickCreatePlan }) => {
   const navigate = useNavigate();
   return (
     <div>
@@ -59,9 +60,21 @@ const SubPageHeader = ({ activeTab = "plan" }) => {
         </div>
 
         {/* 버튼 */}
-        <button className="h-[32px] px-[12px] bg-[#448efe] text-white rounded-lg hover:bg-[#317efe] text-2xl transition-colors duration-200 cursor-pointer">
-          {activeTab === "plan" ? "+ 학습 계획 만들기" : "+ 오늘 할 일 작성"}
-        </button>
+        <Button
+          text={
+            activeTab === "plan" ? "+ 학습 게획 만들기" : "+ 오늘 할 일 작성"
+          }
+          size="sm"
+          color="primary"
+          rounded
+          onClick={() => {
+            if (activeTab === "plan") {
+              onClickCreatePlan();
+            } else {
+              console.log("오늘 할 일 버튼 실행");
+            }
+          }}
+        />
       </div>
     </div>
   );
