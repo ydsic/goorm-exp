@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import rightArrow from "../../assets/svg/right-arrow.svg";
+import confettiImg from "../../assets/svg/confetti-img.svg";
 
 import Aside from "../Aside";
 import TaskManager from "./_components/TaskManager";
 import TaskHeaderBar from "./_components/TaskHeaderBar";
 
 export default function TodoList() {
-  const [isEditComplete, setIsEditComplete] = useState(false); // 상태 추가
+  const [isEditComplete, setIsEditComplete] = useState(false);
 
   return (
     <Wrapper>
@@ -15,10 +16,15 @@ export default function TodoList() {
         <Aside />
       </AsideWrapper>
       <ContsWrapper>
-        <TaskHeaderBar onEditComplete={() => setIsEditComplete(true)} />
-
+        <TaskHeaderBar
+          onEditComplete={() => setIsEditComplete(true)}
+          isEditComplete={isEditComplete}
+        />
         {isEditComplete ? (
           <CompleteMessageWrapper>
+            <ConfettiImgWrapper>
+              <SvgWrapper src={confettiImg} />
+            </ConfettiImgWrapper>
             <MessageTitle>오늘 하루도 화이팅!</MessageTitle>
             <MessageSub>오늘 할일 작성을 완료했어요!</MessageSub>
           </CompleteMessageWrapper>
@@ -26,7 +32,7 @@ export default function TodoList() {
           <TaskCardWrapper>
             <TaskBacklogWrapper></TaskBacklogWrapper>
             <TaskArrowWrapper>
-              <TaskArrowIcon src={rightArrow} />
+              <SvgWrapper src={rightArrow} />
             </TaskArrowWrapper>
             <TaskManager />
           </TaskCardWrapper>
@@ -95,25 +101,48 @@ const TaskArrowWrapper = styled.div`
   align-self: stretch;
   box-sizing: border-box;
 `;
-const TaskArrowIcon = styled.img`
+const SvgWrapper = styled.img`
   width: 100%;
   height: fit-content;
   object-fit: contain;
 `;
+const ConfettiImgWrapper = styled.div`
+  width: 24rem;
+  height: 18rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+`;
 
 const CompleteMessageWrapper = styled.div`
   width: 100%;
-  padding: 4rem;
-  text-align: center;
+  height: 100%;
+  padding: 4rem 0;
+  display: flex;  
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  flex: 1 0 0;
+  box-sizing: border-box;
 `;
 
 const MessageTitle = styled.h2`
-  font-size: 2.4rem;
+  color: #2B2D36;
+  font-size: 2rem;
+  font-style: normal;
   font-weight: 700;
-  margin-bottom: 1.2rem;
+  line-height: 3rem;
+  text-align: center;
 `;
 
 const MessageSub = styled.p`
+  color: #2B2D36;
+  text-align: center;
   font-size: 1.6rem;
-  color: #6b7280;
-`;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2.4rem;
+  text-align: center;
+  `;

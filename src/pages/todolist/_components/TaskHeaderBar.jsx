@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 
-const TaskHeaderBar = ({ onEditComplete }) => {
+const TaskHeaderBar = ({ onEditComplete, isEditComplete }) => {
   const handleBack = () => { window.history.back(); };
 
   return (
@@ -12,9 +12,13 @@ const TaskHeaderBar = ({ onEditComplete }) => {
             <path d="M6 11L1 6M1 6L6 1M1 6H13" stroke="#525463" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </ArrowIcon>
         </BackButton>
-        <HeaderTitle>오늘은 어떤 활동을 하시나요?</HeaderTitle>
+        <HeaderTitle>
+          {isEditComplete ? "오늘 할 일 제출 완료" : "오늘은 어떤 활동을 하시나요?"}
+        </HeaderTitle>
       </LeftSection>
-      <EditButton onClick={onEditComplete}>오늘 할 일 수정</EditButton>
+      {!isEditComplete && (
+        <EditButton onClick={onEditComplete}>오늘 할 일 수정</EditButton>
+      )}
     </HeaderWrapper>
   );
 };
