@@ -201,11 +201,15 @@ const TaskCard = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 1.2rem;
-  background: #f8f9fa;
   border-radius: 1.2rem;
   padding: 1.6rem;
   margin-bottom: 1.6rem;
   position: relative;
+  box-sizing: border-box;
+
+  &:hover {
+    background: #f3f4f6;
+  }
 `;
 
 const StatusCircle = styled.div`
