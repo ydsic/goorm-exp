@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Aside() {
   return (
-    <div style={{ background: "var(--aside-color)", height: "100%" }}>
+    <aside className="w-[300px] bg-[#f7f7fa]  h-full">
       <div>
         <NavLink to="/">홈</NavLink>
       </div>
@@ -12,6 +12,6 @@ export default function Aside() {
         <NavLink to="/diary">최근 작성한 배움일기</NavLink>
         <NavLink to="/feedback">상시 피드백</NavLink>
       </div>
-    </div>
+    </aside>
   );
 }

@@ -6,6 +6,7 @@ export default function Home() {
       <div className="min-w-[300px]">
         <Aside />
       </div>
+
       <div>홈</div>
     </div>
   );

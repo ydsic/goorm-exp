@@ -22,6 +22,7 @@ const LearningPlan = () => {
           <p>스크롤 테스트용 컨텐츠</p>
           <div className="h-[2000px] bg-gray-100 mt-4 rounded"></div>
         </div>
+
       </div>
     </div>
   );
