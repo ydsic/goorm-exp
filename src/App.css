@@ -18,11 +18,21 @@
 .Theme_Light {
   --bg-color: var(--light-bg-color);
   --aside-color: var(--light-aside-color);
+  --home-title-txt-color: #1f2937;
+  --home-bookmark-color: #f9fafb;
+  --home-subtitle-color: #eff6ff;
+  --home-subtitle-txt-color: #1f2937;
 }
 
 .Theme_Dark {
   --bg-color: var(--dark-bg-color);
   --aside-color: var(--dark-aside-color);
+  --home-title-txt-color: #dddde4;
+  --home-bookmark-color: #2c3039;
+  --home-subtitle-color: #23272e;
+  --home-subtitle-txt-color: #dddde4;
+  --catagory-txt-color: #dddde4;
+  --catagory-sub-txt-color: #9395a4;
 }
 
 .btn12345 {
