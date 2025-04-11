@@ -59,7 +59,7 @@ const SubPageHeader = ({ activeTab = "plan" }) => {
         </div>
 
         {/* 버튼 */}
-        <button className="h-[32px] px-[12px] bg-[#448efe] text-white rounded-lg hover:bg-[#317efe] text-2xl transition-colors duration-200">
+        <button className="h-[32px] px-[12px] bg-[#448efe] text-white rounded-lg hover:bg-[#317efe] text-2xl transition-colors duration-200 cursor-pointer">
           {activeTab === "plan" ? "+ 학습 계획 만들기" : "+ 오늘 할 일 작성"}
         </button>
       </div>
