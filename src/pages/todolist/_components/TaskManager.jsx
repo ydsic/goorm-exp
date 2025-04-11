@@ -57,7 +57,7 @@ const TaskManager = () => {
   return (
     <Wrapper>
       <Header>
-        <Title>할 일 {tasks.length}</Title>
+        <Title>할 일 <TitleTask>{tasks.length}</TitleTask></Title>
         <AddButton onClick={addTask}>+ 태스크 추가</AddButton>
       </Header>
       {tasks.map((task, index) => (
@@ -177,6 +177,11 @@ const Title = styled.h2`
   font-size: 1.8rem;
   font-weight: 600;
 `;
+const TitleTask = styled.span`
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #3b82f6;
+`;
 
 const AddButton = styled.button`
   font-size: 1.4rem;
@@ -204,15 +209,15 @@ const TaskCard = styled.div`
 `;
 
 const StatusCircle = styled.div`
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 9999px;
   background-color: ${({ status }) =>
     status === "completed"
-      ? "#22c55e"
+      ? "#04A37E"
       : status === "inProgress"
-      ? "#3b82f6"
-      : "#9ca3af"};
+      ? "#448EFE"
+      : "#6C6E7E"};
   cursor: pointer;
 `;
 
