@@ -25,7 +25,6 @@ const LearningPlan = () => {
             }}
           />
         </div>
-
         {/* 메인 콘텐츠 */}
         <div className="p-6">
           <h1 className="text-2xl font-bold mb-4">학습계획 입니다</h1>

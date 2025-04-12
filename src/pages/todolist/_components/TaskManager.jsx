@@ -15,7 +15,13 @@ const TaskManager = () => {
   const addTask = () => {
     setTasks([
       ...tasks,
-      { text: "", startDate: null, endDate: null, status: "pending", fixed: false },
+      {
+        text: "",
+        startDate: null,
+        endDate: null,
+        status: "pending",
+        fixed: false,
+      },
     ]);
     setEditingIndex(tasks.length);
   };
@@ -57,7 +63,9 @@ const TaskManager = () => {
   return (
     <Wrapper>
       <Header>
-        <Title>할 일 {tasks.length}</Title>
+        <Title>
+          할 일 <TitleTask>{tasks.length}</TitleTask>
+        </Title>
         <AddButton onClick={addTask}>+ 태스크 추가</AddButton>
       </Header>
       {tasks.map((task, index) => (
@@ -73,8 +81,12 @@ const TaskManager = () => {
             />
             {statusDropdownIndex === index && (
               <StatusDropdown>
-                <div onClick={() => changeStatus(index, "pending")}>시작 전</div>
-                <div onClick={() => changeStatus(index, "inProgress")}>진행 중</div>
+                <div onClick={() => changeStatus(index, "pending")}>
+                  시작 전
+                </div>
+                <div onClick={() => changeStatus(index, "inProgress")}>
+                  진행 중
+                </div>
                 <div onClick={() => changeStatus(index, "completed")}>완료</div>
               </StatusDropdown>
             )}
@@ -116,13 +128,21 @@ const TaskManager = () => {
 
             {calendarDropdownIndex === index && (
               <CalendarDropdown>
-                <div style={{ fontSize: "14px", marginBottom: "6px" }}>시작일</div>
+                <div style={{ fontSize: "14px", marginBottom: "6px" }}>
+                  시작일
+                </div>
                 <DatePicker
                   selected={tempStartDate}
                   onChange={(date) => setTempStartDate(date)}
                   dateFormat="yyyy-MM-dd"
                 />
-                <div style={{ fontSize: "14px", marginTop: "10px", marginBottom: "6px" }}>
+                <div
+                  style={{
+                    fontSize: "14px",
+                    marginTop: "10px",
+                    marginBottom: "6px",
+                  }}
+                >
                   종료일
                 </div>
                 <DatePicker
@@ -134,7 +154,10 @@ const TaskManager = () => {
                   <SmallButton onClick={() => setCalendarDropdownIndex(null)}>
                     취소
                   </SmallButton>
-                  <SmallButton variant="confirm" onClick={() => applyDates(index)}>
+                  <SmallButton
+                    variant="confirm"
+                    onClick={() => applyDates(index)}
+                  >
                     적용
                   </SmallButton>
                 </ButtonRow>
@@ -151,7 +174,6 @@ const TaskManager = () => {
 
 export default TaskManager;
 
-
 const Wrapper = styled.div`
   width: 75.5rem;
   height: 100%; /* 화면 전체 높이 */
@@ -160,7 +182,7 @@ const Wrapper = styled.div`
   align-items: flex-start;
   padding: 2rem 2.4rem;
   border-radius: 8px;
-  border: 1px solid #C9D3D8;
+  border: 1px solid #c9d3d8;
   box-sizing: border-box;
   overflow-y: auto;
 `;
@@ -177,10 +199,15 @@ const Title = styled.h2`
   font-size: 1.8rem;
   font-weight: 600;
 `;
+const TitleTask = styled.span`
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #3b82f6;
+`;
 
 const AddButton = styled.button`
   font-size: 1.4rem;
-  padding: .6rem 1.2rem;
+  padding: 0.6rem 1.2rem;
   border: 1px solid #d1d5db;
   border-radius: 6px;
   background: #f9fafb;
@@ -196,30 +223,34 @@ const TaskCard = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 1.2rem;
-  background: #f8f9fa;
   border-radius: 1.2rem;
   padding: 1.6rem;
   margin-bottom: 1.6rem;
   position: relative;
+  box-sizing: border-box;
+
+  &:hover {
+    background: #f3f4f6;
+  }
 `;
 
 const StatusCircle = styled.div`
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 9999px;
   background-color: ${({ status }) =>
     status === "completed"
-      ? "#22c55e"
+      ? "#04A37E"
       : status === "inProgress"
-      ? "#3b82f6"
-      : "#9ca3af"};
+      ? "#448EFE"
+      : "#6C6E7E"};
   cursor: pointer;
 `;
 
 const StatusDropdown = styled.div`
   position: absolute;
   top: 3.8rem;
-  left: .8rem;
+  left: 0.8rem;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
@@ -227,7 +258,7 @@ const StatusDropdown = styled.div`
   z-index: 10;
 
   div {
-    padding: .8rem 1.2rem;
+    padding: 0.8rem 1.2rem;
     font-size: 1.4rem;
     cursor: pointer;
 
@@ -241,7 +272,7 @@ const TaskTextInput = styled.input`
   width: 100%;
   font-size: 1.4rem;
   border: none;
-  padding: .4rem 0;
+  padding: 0.4rem 0;
   outline: none;
   background: transparent;
 `;
@@ -257,7 +288,7 @@ const TaskText = styled.div`
 const SubText = styled.div`
   font-size: 1.2rem;
   color: #9ca3af;
-  margin-top: .4rem;
+  margin-top: 0.4rem;
 `;
 
 const CalendarWrapper = styled.div`
@@ -270,7 +301,7 @@ const CalendarDropdown = styled.div`
   right: 0;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: .8rem;
+  border-radius: 0.8rem;
   padding: 1.2rem;
   z-index: 20;
 `;
@@ -286,7 +317,7 @@ const CalendarButton = styled.button`
 
 const SmallButton = styled.button`
   font-size: 1.2rem;
-  padding: .4rem .8rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 6px;
   border: none;
   cursor: pointer;
@@ -299,7 +330,7 @@ const SmallButton = styled.button`
 const ButtonRow = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: .8rem;
+  gap: 0.8rem;
   margin-top: 1.2rem;
 `;
 

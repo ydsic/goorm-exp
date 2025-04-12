@@ -1,7 +1,29 @@
-import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useParams } from "react-router-dom";
 import Aside from "../Aside";
+import DiaryData from "./DirayData";
+import React from "react";
 
 export default function DiaryPage() {
+  const { id } = useParams();
+  const diary = DiaryData[id];
+  const [comment, setComment] = useState("");
+  const [commentList, setCommentList] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(`comments-${id}`);
+    if (saved) setCommentList(JSON.parse(saved));
+  }, [id]);
+
+  const handleSubmit = () => {
+    if (!comment.trim()) return;
+
+    const newComments = [...commentList, comment];
+    setCommentList(newComments);
+    localStorage.setItem(`comments-${id}`, JSON.stringify(newComments));
+    setComment("");
+  };
+
   return (
     <div className="w-screen h-screen flex">
       <div className="w-[300px]">
@@ -34,17 +56,17 @@ export default function DiaryPage() {
               </svg>
             </button>
           </NavLink>
-          <p className="text-[25px] ml-[10px] font-[900] text-[#DDDDE4] tracking-[-3px]">
+          <p className="text-[22px] ml-[10px] font-[700] text-[#DDDDE4]">
             XXX(프론트엔드 3회차)님의 배움일기
           </p>
         </div>
-        <div className="border-1 border-[rgba(255,255,255,0.1)] w-[80vw] mt-[20px]">
+        <div className="border-1 border-[rgba(255,255,255,0.1)] w-[80.5vw] mt-[20px]">
           <div className="mx-[20px] my-[20px]">
             <p className="text-[20px] text-[#DDDDE4] font-[900]">
-              React의 Virtual DOM이란?
+              {diary.title}
             </p>
             <p className="mt-[5px] text-[#9395A4] text-[13px] font-[900]">
-              1시간 전
+              {diary.time}
             </p>
             <div className="flex mt-[25px]">
               <p className="bg-[#5F9DFA29] text-[#81B2FC] px-[10px] py-[7px] rounded-[7px] text-[12px]">
@@ -55,12 +77,7 @@ export default function DiaryPage() {
               </p>
             </div>
             <div className="text-[#DDDDE4] text-[12px] font-[700] mt-[15px]">
-              Virtual DOM은 실제 DOM을 복제한 가상의 DOM이다.
-              <br />
-              React는 상태가 바뀌면 Virtual DOM에서 먼저 변경을 시뮬레이션하고,
-              실제 DOM과 비교해 필요한 부분만 업데이트한다.
-              <br />
-              이로 인해 성능이 최적화되며, 빠른 렌더링이 가능해진다.
+              {diary.subtitle}
             </div>
             <div className="h-[1px] bg-[#3F434F] my-[25px]" />
             <div>
@@ -187,6 +204,8 @@ export default function DiaryPage() {
 
                 <div className="text-[#C3C4CF]">
                   <input
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
                     placeholder="댓글을 남겨보세요"
                     className="w-[76vw] h-[5vh] text-[12px] ml-[10px] outline-none"
                   />
@@ -207,11 +226,30 @@ export default function DiaryPage() {
                   </svg>
                   초기화
                 </button>
-                <button className="bg-[#5F9DFA] px-[13px] py-[7px] rounded-[7px] text-[13px] font-[900] text-white">
+                <button
+                  onClick={handleSubmit}
+                  className="bg-[#5F9DFA] px-[13px] py-[7px] rounded-[7px] text-[13px] font-[900] text-white"
+                >
                   댓글 등록하기
                 </button>
               </div>
             </div>
+
+            {commentList.length > 0 &&
+              commentList.map((cmt, idx) => (
+                <div
+                  key={idx}
+                  className="text-[#DDDDE4] text-[14px] font-[600] my-[20px]"
+                >
+                  <div className="flex items-center">
+                    <div className="w-[30px] h-[30px] bg-gray-500 rounded-full flex justify-center items-center">
+                      프3
+                    </div>
+                    <p className="ml-[10px]">000(프론트엔드 3회차)</p>
+                  </div>
+                  <p className="mt-[10px]">{cmt}</p>
+                </div>
+              ))}
           </div>
         </div>
         <div className="flex justify-between">

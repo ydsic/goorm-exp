@@ -60,6 +60,7 @@ const SubPageHeader = ({ activeTab = "plan", onClickCreatePlan }) => {
         </div>
 
         {/* 버튼 */}
+
         <Button
           text={
             activeTab === "plan" ? "+ 학습 게획 만들기" : "+ 오늘 할 일 작성"
