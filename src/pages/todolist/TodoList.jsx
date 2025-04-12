@@ -42,7 +42,6 @@ export default function TodoList() {
   );
 }
 
-
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -89,7 +88,7 @@ const TaskBacklogWrapper = styled.div`
   align-self: stretch;
   box-sizing: border-box;
   border-radius: 8px;
-  background: #F7F7FA;  
+  background: #f7f7fa;
 `;
 
 const TaskArrowWrapper = styled.div`
@@ -119,7 +118,7 @@ const CompleteMessageWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 4rem 0;
-  display: flex;  
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -129,7 +128,7 @@ const CompleteMessageWrapper = styled.div`
 `;
 
 const MessageTitle = styled.h2`
-  color: #2B2D36;
+  color: #2b2d36;
   font-size: 2rem;
   font-style: normal;
   font-weight: 700;
@@ -138,11 +137,11 @@ const MessageTitle = styled.h2`
 `;
 
 const MessageSub = styled.p`
-  color: #2B2D36;
+  color: #2b2d36;
   text-align: center;
   font-size: 1.6rem;
   font-style: normal;
   font-weight: 500;
   line-height: 2.4rem;
   text-align: center;
-  `;
+`;

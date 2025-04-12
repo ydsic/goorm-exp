@@ -9,7 +9,6 @@ export default function Home() {
       <div className="min-w-[300px]">
         <Aside />
       </div>
-
       <div className="inline-flex flex-col justify-start items-center overflow-y-auto overflow-x-hidden">
         <div className="self-stretch mx-[12px] mt-[10px] px-8 py-4 inline-flex justify-start items-center gap-2">
           <div className="justify-center">
