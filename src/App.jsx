@@ -6,7 +6,7 @@ import TodoList from "./pages/todolist/TodoList";
 import LearningPlan from "./pages/learning-plan/LearningPlan";
 import Diary from "./pages/diary/Diary";
 import DiaryPage from "./pages/diary/DiaryPage";
-import Feedback from "./pages/feedback/Feedback";
+import Feedback from "./_components/Feedback/Feedback";
 
 export default function App() {
   const [darkmod, setDarkMod] = useState(false);
@@ -29,7 +29,8 @@ export default function App() {
           <Route path="/todolist" element={<TodoList />} />
           <Route path="/learningplan" element={<LearningPlan />} />
           <Route path="/diary" element={<Diary />} />
-          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/feedback/received" element={<Feedback />} />
+          <Route path="/feedback/send" element={<Feedback />} />
           <Route path="/diarypage" element={<DiaryPage />} />
         </Routes>
       </BrowserRouter>
