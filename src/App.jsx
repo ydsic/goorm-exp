@@ -7,7 +7,7 @@ import LearningPlan from "./pages/learning-plan/LearningPlan";
 import Diary from "./pages/diary/Diary";
 import DiaryPage from "./pages/diary/DiaryPage";
 import DiaryAdd from "./pages/diary/DiaryAdd";
-import Feedback from "./pages/feedback/Feedback";
+import Feedback from "./_components/Feedback/Feedback";
 
 export default function App() {
   const [darkmod, setDarkMod] = useState(false);
