@@ -11,7 +11,7 @@ import EducationIcon from "../assets/svg/sideIcon-edu.svg";
 
 export default function Aside() {
   return (
-    <aside className="w-[30rem] h-screen flex flex-col items-start justify-start bg-[var(--aside-color)] border-r border-[var(--border-color-gray)] p-5 gap-1.5 box-border">
+    <aside className="w-[30rem] min-h-screen flex flex-col items-start justify-start bg-[var(--aside-color)] border-r border-[var(--border-color-gray)] p-5 gap-1.5 box-border">
       {/* 상단 라벨 */}
       <div className="flex items-center gap-2 text-[1.2rem] font-medium text-[var(--gray-50)] leading-[1.6rem] tracking-tight px-1">
         <div className="w-5 h-5">
@@ -43,7 +43,7 @@ export default function Aside() {
         <NavItem to="/todolist" icon={TodayIcon} label="오늘 할 일" />
         <NavItem to="/learningplan" icon={LearningPlanIcon} label="학습 계획" />
         <NavItem to="/diary" icon={DiaryIcon} label="배움일기" />
-        <NavItem to="/feedback" icon={FeedbackIcon} label="피드백" />
+        <NavItem to="/feedback/received" icon={FeedbackIcon} label="피드백" />
       </nav>
     </aside>
   );

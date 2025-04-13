@@ -5,11 +5,9 @@ import DiaryData from "./diary/DirayData";
 
 export default function Home() {
   return (
-    <div className="w-screen h-screen flex">
-      <div className="min-w-[300px]">
-        <Aside />
-      </div>
-      <div className="inline-flex flex-col justify-start items-center overflow-y-auto overflow-x-hidden">
+    <div className="w-screen flex">
+      <Aside />
+      <div className="w-[calc(100%-300px)] inline-flex flex-col justify-start items-center overflow-y-auto overflow-x-hidden">
         <div className="self-stretch mx-[12px] mt-[10px] px-8 py-4 inline-flex justify-start items-center gap-2">
           <div className="justify-center">
             <span className="text-gray-500 text-[11px] font-[700] leading-none">

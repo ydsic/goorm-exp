@@ -28,7 +28,7 @@ export default function Feedback() {
   const userPlaceholder = "학생 또는 그룹을 선택해주세요.";
   return (
     <div className="relative">
-      <div className="w-screen h-screen flex">
+      <div className="w-screen flex">
         <Aside />
 
         <div className="w-[calc(100%-300px)]">
@@ -70,7 +70,7 @@ export default function Feedback() {
             <div className="h-svh">
               <div className="flex justify-between items-center mb-8">
                 <div className="relative">
-                  <span className="absolute top-3 left-2">
+                  <span className="block absolute top-3 left-2">
                     <SearchIcon />
                   </span>
                   <input
