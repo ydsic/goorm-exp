@@ -48,7 +48,7 @@ const TaskManager = ({ tasks, setTasks, onDelete }) => {
   };
 
   return (
-    <div className="w-[75.5rem] h-full flex flex-col items-start p-[2rem_2.4rem] rounded-[0.8rem] border border-[#c9d3d8] overflow-y-auto text-[1.6rem]">
+    <div className="w-[50%] h-full flex flex-col items-start p-[2rem_2.4rem] rounded-[0.8rem] border border-[#c9d3d8] overflow-y-auto text-[1.6rem]">
       <div className="w-full flex justify-between items-center mb-[2.4rem]">
         <h2 className="text-[1.8rem] font-semibold">할 일 <span className="text-[#3b82f6]">{tasks.length}</span></h2>
         <button
