@@ -30,9 +30,11 @@ export default function App() {
           <Route path="/todolist" element={<TodoList />} />
           <Route path="/learningplan" element={<LearningPlan />} />
           <Route path="/diary" element={<Diary />} />
-          <Route path="/feedback" element={<Feedback />} />
           <Route path="/diarypage/:id" element={<DiaryPage />} />
           <Route path="/diaryadd" element={<DiaryAdd />} />
+          <Route path="/feedback/received" element={<Feedback />} />
+          <Route path="/feedback/send" element={<Feedback />} />
+          <Route path="/diarypage" element={<DiaryPage />} />
         </Routes>
       </BrowserRouter>
     </div>
