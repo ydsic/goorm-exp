@@ -222,13 +222,13 @@ const TaskManager = ({ tasks, setTasks, onDelete }) => {
                   <div className="flex justify-end gap-[0.8rem] mt-[1.2rem]">
                     <button
                       onClick={() => setCalendarDropdownIndex(null)}
-                      className="text-[1.2rem] px-[0.8rem] py-[0.4rem] rounded-[0.6rem] bg-[#f3f4f6] text-[#374151]"
+                      className="text-[1.2rem] px-[0.8rem] py-[0.4rem] rounded-[0.6rem] bg-[#f3f4f6] text-[#374151] cursor-pointer"
                     >
                       취소
                     </button>
                     <button
                       onClick={() => applyDates(index)}
-                      className="text-[1.2rem] px-[0.8rem] py-[0.4rem] rounded-[0.6rem] bg-[#3b82f6] text-white"
+                      className="text-[1.2rem] px-[0.8rem] py-[0.4rem] rounded-[0.6rem] bg-[#3b82f6] text-white cursor-pointer"
                     >
                       적용
                     </button>
