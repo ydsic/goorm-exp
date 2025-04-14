@@ -1,147 +1,85 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import rightArrow from "../../assets/svg/right-arrow.svg";
 import confettiImg from "../../assets/svg/confetti-img.svg";
 
 import Aside from "../Aside";
+import CustomNavHeader from "./_components/CustomNavHeader";
 import TaskManager from "./_components/TaskManager";
 import TaskHeaderBar from "./_components/TaskHeaderBar";
+import TaskBacklog from "./_components/TaskBacklog";
 
 export default function TodoList() {
   const [isEditComplete, setIsEditComplete] = useState(false);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("tasks");
+    if (saved) setTasks(JSON.parse(saved));
+  }, []);
+
+  const saveTasksToLocalStorage = (updatedTasks) => {
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
+
+  const handleEditComplete = () => {
+    saveTasksToLocalStorage(tasks);
+    setIsEditComplete(true);
+  };
+
+  const handleDeleteTask = (index) => {
+    const updated = [...tasks];
+    updated.splice(index, 1);
+    setTasks(updated);
+    saveTasksToLocalStorage(updated);
+  };
 
   return (
-    <Wrapper>
-      <AsideWrapper>
+    <div className="w-screen h-screen flex items-start text-[1.6rem]">
+      <div className="w-[30rem] h-full box-border">
         <Aside />
-      </AsideWrapper>
-      <ContsWrapper>
+      </div>
+      <div className="flex flex-col items-start justify-start p-[1.6rem_3.2rem] w-full h-full box-border">
+        <CustomNavHeader>오늘 할 일 수정</CustomNavHeader>
         <TaskHeaderBar
-          onEditComplete={() => setIsEditComplete(true)}
+          onEditComplete={handleEditComplete}
           isEditComplete={isEditComplete}
         />
         {isEditComplete ? (
-          <CompleteMessageWrapper>
-            <ConfettiImgWrapper>
-              <SvgWrapper src={confettiImg} />
-            </ConfettiImgWrapper>
-            <MessageTitle>오늘 하루도 화이팅!</MessageTitle>
-            <MessageSub>오늘 할일 작성을 완료했어요!</MessageSub>
-          </CompleteMessageWrapper>
+          <div className="w-full h-full py-[4rem] flex flex-col justify-center items-center gap-[1.2rem] flex-1 box-border">
+            <div className="w-[24rem] h-[18rem] flex justify-center items-center">
+              <img
+                src={confettiImg}
+                alt="confetti"
+                className="w-full h-auto object-contain"
+              />
+            </div>
+            <h2 className="text-[2rem] font-bold text-center text-[#2b2d36]">
+              오늘 하루도 화이팅!
+            </h2>
+            <p className="text-[1.6rem] font-medium text-center text-[#2b2d36]">
+              오늘 할일 작성을 완료했어요!
+            </p>
+          </div>
         ) : (
-          <TaskCardWrapper>
-            <TaskBacklogWrapper></TaskBacklogWrapper>
-            <TaskArrowWrapper>
-              <SvgWrapper src={rightArrow} />
-            </TaskArrowWrapper>
-            <TaskManager />
-          </TaskCardWrapper>
+          <div className="w-full h-full flex justify-between items-center gap-[1.2rem] flex-1 box-border">
+            <div className="flex flex-col items-center gap-[2.4rem] p-[1.6rem] w-[75.5rem] h-full rounded-[0.8rem] bg-[#f7f7fa] box-border">
+              <TaskBacklog />
+            </div>
+            <div className="w-[2rem] h-full flex justify-center items-center box-border">
+              <img
+                src={rightArrow}
+                alt="arrow"
+                className="w-full h-auto object-contain"
+              />
+            </div>
+            <TaskManager
+              tasks={tasks}
+              setTasks={setTasks}
+              onDelete={handleDeleteTask}
+            />
+          </div>
         )}
-      </ContsWrapper>
-    </Wrapper>
+      </div>
+    </div>
   );
 }
-
-const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: flex-start;
-`;
-
-const AsideWrapper = styled.div`
-  width: 300px;
-  height: 100%;
-  box-sizing: border-box;
-`;
-
-const ContsWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 1.6rem 3.2rem;
-  box-sizing: border-box;
-`;
-
-const TaskCardWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1 0 0;
-  align-self: stretch;
-  gap: 1.2rem;
-  box-sizing: border-box;
-`;
-
-const TaskBacklogWrapper = styled.div`
-  display: flex;
-  width: 75.5rem;
-  padding: 1.6rem;
-  flex-direction: column;
-  align-items: center;
-  gap: 2.4rem;
-  align-self: stretch;
-  box-sizing: border-box;
-  border-radius: 8px;
-  background: #f7f7fa;
-`;
-
-const TaskArrowWrapper = styled.div`
-  width: 2rem;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-self: stretch;
-  box-sizing: border-box;
-`;
-const SvgWrapper = styled.img`
-  width: 100%;
-  height: fit-content;
-  object-fit: contain;
-`;
-const ConfettiImgWrapper = styled.div`
-  width: 24rem;
-  height: 18rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-`;
-
-const CompleteMessageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 4rem 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1.2rem;
-  flex: 1 0 0;
-  box-sizing: border-box;
-`;
-
-const MessageTitle = styled.h2`
-  color: #2b2d36;
-  font-size: 2rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 3rem;
-  text-align: center;
-`;
-
-const MessageSub = styled.p`
-  color: #2b2d36;
-  text-align: center;
-  font-size: 1.6rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 2.4rem;
-  text-align: center;
-`;

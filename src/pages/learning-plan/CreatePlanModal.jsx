@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 const CreatePlanModal = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
+
   const [title, setTitle] = useState("");
   const [group, setGroup] = useState("");
   const [template, setTemplate] = useState("");

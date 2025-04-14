@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { differenceInCalendarDays } from "date-fns";
 
-const TaskManager = () => {
-  const [tasks, setTasks] = useState([]);
+const TaskManager = ({ tasks, setTasks, onDelete }) => {
   const [calendarDropdownIndex, setCalendarDropdownIndex] = useState(null);
   const [tempStartDate, setTempStartDate] = useState(null);
   const [tempEndDate, setTempEndDate] = useState(null);
@@ -13,7 +11,7 @@ const TaskManager = () => {
   const [editingIndex, setEditingIndex] = useState(null);
 
   const addTask = () => {
-    setTasks([
+    const updated = [
       ...tasks,
       {
         text: "",
@@ -22,14 +20,9 @@ const TaskManager = () => {
         status: "pending",
         fixed: false,
       },
-    ]);
-    setEditingIndex(tasks.length);
-  };
-
-  const deleteTask = (index) => {
-    const updated = [...tasks];
-    updated.splice(index, 1);
+    ];
     setTasks(updated);
+    setEditingIndex(updated.length - 1);
   };
 
   const applyDates = (index) => {
@@ -61,294 +54,202 @@ const TaskManager = () => {
   };
 
   return (
-    <Wrapper>
-      <Header>
-        <Title>
-          할 일 <TitleTask>{tasks.length}</TitleTask>
-        </Title>
-        <AddButton onClick={addTask}>+ 태스크 추가</AddButton>
-      </Header>
-      {tasks.map((task, index) => (
-        <TaskCard key={index}>
-          <div>
-            <StatusCircle
-              status={task.status}
-              onClick={() =>
-                setStatusDropdownIndex(
-                  index === statusDropdownIndex ? null : index
-                )
-              }
-            />
-            {statusDropdownIndex === index && (
-              <StatusDropdown>
-                <div onClick={() => changeStatus(index, "pending")}>
-                  시작 전
-                </div>
-                <div onClick={() => changeStatus(index, "inProgress")}>
-                  진행 중
-                </div>
-                <div onClick={() => changeStatus(index, "completed")}>완료</div>
-              </StatusDropdown>
-            )}
-          </div>
+    <div className="w-[75.5rem] h-full flex flex-col items-start p-[2rem_2.4rem] rounded-[0.8rem] border border-[#c9d3d8] overflow-y-auto text-[1.6rem]">
+      <div className="w-full flex justify-between items-center mb-[2.4rem]">
+        <h2 className="text-[1.8rem] font-semibold">
+          할 일 <span className="text-[#3b82f6]">{tasks.length}</span>
+        </h2>
+        <button
+          onClick={addTask}
+          className="text-[1.4rem] px-[1.2rem] py-[0.6rem] border border-[#d1d5db] rounded-[0.6rem] bg-[#f9fafb] hover:bg-[#f3f4f6]"
+        >
+          + 태스크 추가
+        </button>
+      </div>
 
-          <div style={{ flex: 1 }}>
-            {editingIndex === index || !task.fixed ? (
-              <TaskTextInput
-                type="text"
-                placeholder="태스크 이름"
-                autoFocus
-                value={task.text}
-                onChange={(e) => {
-                  const updated = [...tasks];
-                  updated[index].text = e.target.value;
-                  setTasks(updated);
-                }}
-                onBlur={() => finalizeText(index)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") finalizeText(index);
-                }}
-              />
-            ) : (
-              <TaskText status={task.status}>{task.text}</TaskText>
-            )}
-            <SubText>잠죽자 팀스터디(프론트엔드 3회차)의 태스크</SubText>
-          </div>
-
-          <CalendarWrapper>
-            <CalendarButton
-              onClick={() =>
-                setCalendarDropdownIndex(
-                  index === calendarDropdownIndex ? null : index
-                )
-              }
-            >
-              {getDday(task.endDate)}
-            </CalendarButton>
-
-            {calendarDropdownIndex === index && (
-              <CalendarDropdown>
-                <div style={{ fontSize: "14px", marginBottom: "6px" }}>
-                  시작일
-                </div>
-                <DatePicker
-                  selected={tempStartDate}
-                  onChange={(date) => setTempStartDate(date)}
-                  dateFormat="yyyy-MM-dd"
-                />
+      {tasks.length === 0 ? (
+        <div className="w-full py-[8rem] flex flex-col justify-center items-center gap-[2rem] text-[#9ca3af] text-[1.6rem] font-medium">
+          <p className="text-[#6b7280]">작성된 할 일이 없습니다</p>
+          <button
+            onClick={addTask}
+            className="text-[1.4rem] px-[1.2rem] py-[0.6rem] border border-[#d1d5db] rounded-[0.6rem] bg-[#f9fafb] hover:bg-[#f3f4f6]"
+          >
+            + 태스크 추가
+          </button>
+        </div>
+      ) : (
+        tasks.map((task, index) => (
+          <div
+            key={index}
+            className="w-full flex items-start gap-[1.2rem] rounded-[1.2rem] p-[1.6rem] mb-[1.6rem] relative box-border hover:bg-[#f3f4f6]"
+          >
+            <div className="flex flex-col mr-[0.8rem]">
+              <div
+                className={`p-[0.4rem] rounded-[0.8rem] ${
+                  task.status === "completed"
+                    ? "bg-[rgba(4,163,126,0.16)]"
+                    : task.status === "inProgress"
+                    ? "bg-[rgba(68,142,254,0.16)]"
+                    : "bg-[rgba(108,110,126,0.16)]"
+                }`}
+              >
                 <div
-                  style={{
-                    fontSize: "14px",
-                    marginTop: "10px",
-                    marginBottom: "6px",
-                  }}
-                >
-                  종료일
-                </div>
-                <DatePicker
-                  selected={tempEndDate}
-                  onChange={(date) => setTempEndDate(date)}
-                  dateFormat="yyyy-MM-dd"
+                  onClick={() =>
+                    setStatusDropdownIndex(
+                      index === statusDropdownIndex ? null : index
+                    )
+                  }
+                  className={`w-[1.2rem] h-[1.2rem] rounded-full cursor-pointer ${
+                    task.status === "completed"
+                      ? "bg-[#04A37E]"
+                      : task.status === "inProgress"
+                      ? "bg-[#448EFE]"
+                      : "bg-[#6C6E7E]"
+                  }`}
                 />
-                <ButtonRow>
-                  <SmallButton onClick={() => setCalendarDropdownIndex(null)}>
-                    취소
-                  </SmallButton>
-                  <SmallButton
-                    variant="confirm"
-                    onClick={() => applyDates(index)}
-                  >
-                    적용
-                  </SmallButton>
-                </ButtonRow>
-              </CalendarDropdown>
-            )}
-          </CalendarWrapper>
+              </div>
+              {statusDropdownIndex === index && (
+                <div className="absolute top-[3.8rem] left-[0.8rem] w-[14rem] p-[0.8rem_0] rounded-[1.2rem] bg-white border border-[#e5e7eb] shadow-[0_8px_24px_rgba(0,0,0,0.08)] z-10">
+                  {["pending", "inProgress", "completed"].map((status) => (
+                    <div
+                      key={status}
+                      onClick={() => changeStatus(index, status)}
+                      className="flex items-center gap-[0.6rem] px-[1.2rem] py-[0.6rem] text-[1.4rem] text-[#2b2d36] cursor-pointer hover:bg-[#f3f4f6]"
+                    >
+                      <div
+                        className={`w-[1.2rem] h-[1.2rem] rounded-full ${
+                          status === "completed"
+                            ? "bg-[#04A37E]"
+                            : status === "inProgress"
+                            ? "bg-[#448EFE]"
+                            : "bg-[#6C6E7E]"
+                        }`}
+                      />
+                      {status === "pending"
+                        ? "시작전"
+                        : status === "inProgress"
+                        ? "진행중"
+                        : "완료"}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
-          <DeleteButton onClick={() => deleteTask(index)}>−</DeleteButton>
-        </TaskCard>
-      ))}
-    </Wrapper>
+            <div className="flex-1">
+              {editingIndex === index || !task.fixed ? (
+                <input
+                  type="text"
+                  placeholder="태스크 이름"
+                  autoFocus
+                  value={task.text}
+                  onChange={(e) => {
+                    const updated = [...tasks];
+                    updated[index].text = e.target.value;
+                    setTasks(updated);
+                  }}
+                  onBlur={() => finalizeText(index)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") finalizeText(index);
+                  }}
+                  className="w-full text-[1.4rem] border-none p-[0.4rem_0] outline-none bg-transparent"
+                />
+              ) : (
+                <div
+                  className={`text-[1.4rem] ${
+                    task.status === "completed"
+                      ? "line-through text-[#6b7280]"
+                      : ""
+                  }`}
+                >
+                  {task.text}
+                </div>
+              )}
+              <div className="text-[1.2rem] text-[#9ca3af] mt-[0.4rem]">
+                잠죽자 팀스터디(프론트엔드 3회차)의 태스크
+              </div>
+            </div>
+
+            <div className="relative">
+              <button
+                onClick={() =>
+                  setCalendarDropdownIndex(
+                    index === calendarDropdownIndex ? null : index
+                  )
+                }
+                className="text-[1.2rem] text-[#6b7280] underline cursor-pointer bg-none border-none flex items-center gap-[0.4rem]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                >
+                  <path
+                    d="M3.5 5.5H4.5V6.5H3.5V5.5ZM3.5 7.5H4.5V8.5H3.5V7.5ZM5.5 5.5H6.5V6.5H5.5V5.5ZM5.5 7.5H6.5V8.5H5.5V7.5ZM7.5 5.5H8.5V6.5H7.5V5.5ZM7.5 7.5H8.5V8.5H7.5V7.5Z"
+                    fill="#32404C"
+                  />
+                  <path
+                    d="M2.5 11H9.5C10.0515 11 10.5 10.5515 10.5 10V3C10.5 2.4485 10.0515 2 9.5 2H8.5V1H7.5V2H4.5V1H3.5V2H2.5C1.9485 2 1.5 2.4485 1.5 3V10C1.5 10.5515 1.9485 11 2.5 11ZM9.5 4L9.5005 10H2.5V4H9.5Z"
+                    fill="#32404C"
+                  />
+                </svg>
+                {getDday(task.endDate)}
+              </button>
+              {calendarDropdownIndex === index && (
+                <div className="absolute top-[2.6rem] right-0 bg-white border border-[#e5e7eb] rounded-[0.8rem] p-[1.2rem] z-20 w-[24rem]">
+                  <div className="text-[1.3rem] font-medium mb-[0.6rem]">
+                    시작일
+                  </div>
+                  <DatePicker
+                    selected={tempStartDate}
+                    onChange={(date) => setTempStartDate(date)}
+                    dateFormat="yyyy.MM.dd"
+                    className="w-full text-[1.4rem] px-[1rem] py-[0.8rem] border border-[#d1d5db] rounded-[0.8rem] mb-[1.2rem] focus:border-[#448efe] focus:ring-2 focus:ring-[#448efe33] focus:outline-none"
+                    placeholderText="날짜 선택"
+                  />
+                  <div className="text-[1.3rem] font-medium mb-[0.6rem]">
+                    종료일
+                  </div>
+                  <DatePicker
+                    selected={tempEndDate}
+                    onChange={(date) => setTempEndDate(date)}
+                    dateFormat="yyyy.MM.dd"
+                    className="w-full text-[1.4rem] px-[1rem] py-[0.8rem] border border-[#d1d5db] rounded-[0.8rem] mb-[1.2rem] focus:border-[#448efe] focus:ring-2 focus:ring-[#448efe33] focus:outline-none"
+                    placeholderText="날짜 선택"
+                  />
+                  <div className="flex justify-end gap-[0.8rem] mt-[1.2rem]">
+                    <button
+                      onClick={() => setCalendarDropdownIndex(null)}
+                      className="text-[1.2rem] px-[0.8rem] py-[0.4rem] rounded-[0.6rem] bg-[#f3f4f6] text-[#374151]"
+                    >
+                      취소
+                    </button>
+                    <button
+                      onClick={() => applyDates(index)}
+                      className="text-[1.2rem] px-[0.8rem] py-[0.4rem] rounded-[0.6rem] bg-[#3b82f6] text-white"
+                    >
+                      적용
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="hidden group-hover:flex ml-[1rem]">
+              <button
+                onClick={() => onDelete(index)}
+                className="w-[2.4rem] h-[2.4rem] rounded-full bg-[#ef4444] text-white text-[1.6rem] font-bold flex items-center justify-center hover:bg-[#dc2626]"
+              >
+                −
+              </button>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
   );
 };
 
 export default TaskManager;
-
-const Wrapper = styled.div`
-  width: 75.5rem;
-  height: 100%; /* 화면 전체 높이 */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 2rem 2.4rem;
-  border-radius: 8px;
-  border: 1px solid #c9d3d8;
-  box-sizing: border-box;
-  overflow-y: auto;
-`;
-
-const Header = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2.4rem;
-`;
-
-const Title = styled.h2`
-  font-size: 1.8rem;
-  font-weight: 600;
-`;
-const TitleTask = styled.span`
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #3b82f6;
-`;
-
-const AddButton = styled.button`
-  font-size: 1.4rem;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #f9fafb;
-  cursor: pointer;
-
-  &:hover {
-    background: #f3f4f6;
-  }
-`;
-
-const TaskCard = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.2rem;
-  border-radius: 1.2rem;
-  padding: 1.6rem;
-  margin-bottom: 1.6rem;
-  position: relative;
-  box-sizing: border-box;
-
-  &:hover {
-    background: #f3f4f6;
-  }
-`;
-
-const StatusCircle = styled.div`
-  width: 1.4rem;
-  height: 1.4rem;
-  border-radius: 9999px;
-  background-color: ${({ status }) =>
-    status === "completed"
-      ? "#04A37E"
-      : status === "inProgress"
-      ? "#448EFE"
-      : "#6C6E7E"};
-  cursor: pointer;
-`;
-
-const StatusDropdown = styled.div`
-  position: absolute;
-  top: 3.8rem;
-  left: 0.8rem;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  z-index: 10;
-
-  div {
-    padding: 0.8rem 1.2rem;
-    font-size: 1.4rem;
-    cursor: pointer;
-
-    &:hover {
-      background: #f9fafb;
-    }
-  }
-`;
-
-const TaskTextInput = styled.input`
-  width: 100%;
-  font-size: 1.4rem;
-  border: none;
-  padding: 0.4rem 0;
-  outline: none;
-  background: transparent;
-`;
-
-const TaskText = styled.div`
-  font-size: 1.4rem;
-  ${({ status }) =>
-    status === "completed"
-      ? "text-decoration: line-through; color: #6b7280;"
-      : ""}
-`;
-
-const SubText = styled.div`
-  font-size: 1.2rem;
-  color: #9ca3af;
-  margin-top: 0.4rem;
-`;
-
-const CalendarWrapper = styled.div`
-  position: relative;
-`;
-
-const CalendarDropdown = styled.div`
-  position: absolute;
-  top: 2.6rem;
-  right: 0;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.8rem;
-  padding: 1.2rem;
-  z-index: 20;
-`;
-
-const CalendarButton = styled.button`
-  font-size: 1.2rem;
-  color: #6b7280;
-  text-decoration: underline;
-  cursor: pointer;
-  background: none;
-  border: none;
-`;
-
-const SmallButton = styled.button`
-  font-size: 1.2rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  ${({ variant }) =>
-    variant === "confirm"
-      ? "background: #3b82f6; color: white;"
-      : "background: #f3f4f6; color: #374151;"}
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.8rem;
-  margin-top: 1.2rem;
-`;
-
-const DeleteButton = styled.button`
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: 9999px;
-  background-color: #ef4444;
-  color: white;
-  font-size: 1.6rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #dc2626;
-  }
-`;
