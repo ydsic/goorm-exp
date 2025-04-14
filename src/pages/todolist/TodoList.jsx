@@ -47,10 +47,18 @@ export default function TodoList() {
         {isEditComplete ? (
           <div className="w-full h-full py-[4rem] flex flex-col justify-center items-center gap-[1.2rem] flex-1 box-border">
             <div className="w-[24rem] h-[18rem] flex justify-center items-center">
-              <img src={confettiImg} alt="confetti" className="w-full h-auto object-contain" />
+              <img
+                src={confettiImg}
+                alt="confetti"
+                className="w-full h-auto object-contain"
+              />
             </div>
-            <h2 className="text-[2rem] font-bold text-center text-[#2b2d36]">오늘 하루도 화이팅!</h2>
-            <p className="text-[1.6rem] font-medium text-center text-[#2b2d36]">오늘 할일 작성을 완료했어요!</p>
+            <h2 className="text-[2rem] font-bold text-center text-[#2b2d36]">
+              오늘 하루도 화이팅!
+            </h2>
+            <p className="text-[1.6rem] font-medium text-center text-[#2b2d36]">
+              오늘 할일 작성을 완료했어요!
+            </p>
           </div>
         ) : (
           <div className="w-full h-full flex justify-between items-center gap-[1.2rem] flex-1 box-border">
@@ -58,9 +66,17 @@ export default function TodoList() {
               <TaskBacklog />
             </div>
             <div className="w-[2rem] h-full flex justify-center items-center box-border">
-              <img src={rightArrow} alt="arrow" className="w-full h-auto object-contain" />
+              <img
+                src={rightArrow}
+                alt="arrow"
+                className="w-full h-auto object-contain"
+              />
             </div>
-            <TaskManager tasks={tasks} setTasks={setTasks} onDelete={handleDeleteTask} />
+            <TaskManager
+              tasks={tasks}
+              setTasks={setTasks}
+              onDelete={handleDeleteTask}
+            />
           </div>
         )}
       </div>
