@@ -62,7 +62,7 @@ export default function TodoList() {
           </div>
         ) : (
           <div className="w-full h-full flex justify-between items-center gap-[1.2rem] flex-1 box-border">
-            <div className="flex flex-col items-center gap-[2.4rem] p-[1.6rem] w-[75.5rem] h-full rounded-[0.8rem] bg-[#f7f7fa] box-border">
+            <div className="flex flex-col items-center gap-[2.4rem] p-[1.6rem] w-[50%] h-full rounded-[0.8rem] bg-[#f7f7fa] box-border">
               <TaskBacklog />
             </div>
             <div className="w-[2rem] h-full flex justify-center items-center box-border">
