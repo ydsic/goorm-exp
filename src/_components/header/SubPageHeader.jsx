@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../../pages/learning-plan/Button";
+import Button from "../../pages/learning-plan/_components/Button";
 
 const SubPageHeader = ({ activeTab = "plan", onClickCreatePlan }) => {
   const navigate = useNavigate();

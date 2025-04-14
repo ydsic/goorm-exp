@@ -1,4 +1,3 @@
-// 📁 src/pages/learning-plan/Button.jsx
 import React from "react";
 
 const Button = ({
@@ -11,14 +10,15 @@ const Button = ({
   rounded = false,
   fullWidth = false,
   className = "",
+  disabled = false,
 }) => {
   // 사이즈 클래스
   const sizeClass =
     size === "sm"
-      ? "text-sm px-3 py-1.5 h-[28px]"
+      ? "text-lg px-3 py-1.5 h-[32px]"
       : size === "lg"
-      ? "text-lg px-5 py-2.5 h-[44px]"
-      : "text-base px-4 py-2 h-[36px]";
+      ? "text-xl px-4 py-2.5 h-[44px]"
+      : "text-base px-4 py-2 h-[40px]";
 
   // 컬러 클래스
   const colorClass =
@@ -29,15 +29,22 @@ const Button = ({
       : "bg-[#448efe] text-white hover:bg-[#317efe]";
 
   // 라운딩
-  const radiusClass = rounded ? "rounded-lg" : "rounded-lg";
+  const radiusClass = rounded ? "rounded-xl" : "rounded-2xl";
 
   // 전체 조합
-  const finalClass = `inline-flex items-center justify-center gap-2 transition-colors duration-200 ${sizeClass} ${colorClass} ${radiusClass} ${
-    fullWidth ? "w-full" : ""
-  } ${className}`;
+  const finalClass = `
+  inline-flex items-center justify-center gap-2 transition-colors duration-200
+  ${
+    disabled
+      ? "bg-[#cce0ff] text-white cursor-not-allowed"
+      : `${colorClass} cursor-pointer`
+  }
+
+${sizeClass} ${radiusClass} ${fullWidth ? "w-full" : ""} ${className}
+`;
 
   return (
-    <button onClick={onClick} className={finalClass}>
+    <button onClick={onClick} className={finalClass} disabled={disabled}>
       {icon && iconPosition === "left" && icon}
       <span>{text}</span>
       {icon && iconPosition === "right" && icon}
