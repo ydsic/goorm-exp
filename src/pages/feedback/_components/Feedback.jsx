@@ -1,8 +1,8 @@
 import Aside from "../../Aside";
-import FeedbackButton from "./button";
 import NoFeedback from "./NoFeedback";
 import ModalFeedback from "./ModalFeedback";
 import { useState } from "react";
+import FeedbackButton from "./Button";
 
 export default function Feedback() {
   const [modalOpen, setModalOpen] = useState(false);
