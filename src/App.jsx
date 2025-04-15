@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import TodoList from "./pages/todolist/TodoList";
@@ -7,7 +7,7 @@ import LearningPlan from "./pages/learning-plan/LearningPlan";
 import Diary from "./pages/diary/Diary";
 import DiaryPage from "./pages/diary/DiaryPage";
 import DiaryAdd from "./pages/diary/DiaryAdd";
-import Feedback from "./_components/Feedback/Feedback";
+import Feedback from "./pages/feedback/_components/Feedback";
 
 export default function App() {
   const [darkmod, setDarkMod] = useState(false);
