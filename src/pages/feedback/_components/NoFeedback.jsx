@@ -1,4 +1,4 @@
-import FeedbackButton from "./button";
+import FeedbackButton from "./FeedbackButton";
 
 export default function NoFeedback({ onClick }) {
   return (
