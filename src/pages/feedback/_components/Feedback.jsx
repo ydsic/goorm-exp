@@ -1,7 +1,7 @@
 import Aside from "../../Aside";
 import NoFeedback from "./NoFeedback";
 import ModalFeedback from "./ModalFeedback";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FeedbackButton from "./FeedbackButton";
 
 export default function Feedback() {
