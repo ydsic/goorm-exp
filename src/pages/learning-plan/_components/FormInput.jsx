@@ -10,7 +10,7 @@ const FormInput = ({
   return (
     <div>
       {label && (
-        <label className="block text-[#525463] mb-3 text-xl">
+        <label className="block text-[#525463] mb-3 text-2xl">
           {label} {required && <span className="text-[#D91C29]">*</span>}
         </label>
       )}
@@ -27,7 +27,7 @@ const FormInput = ({
             ? "bg-gray-100 cursor-not-allowed"
             : "bg-white focus:border-[#448efe] cursor-text"
         } 
-        border-l-[1px] border-[#e1e1e8] placeholder:text-lg`}
+        border-l-[1px] border-[#e1e1e8] placeholder:text-xl`}
         />
       ) : (
         <input
@@ -42,7 +42,7 @@ const FormInput = ({
               ? "bg-gray-100 cursor-not-allowed border-[#e1e1e8]"
               : "bg-white focus:border-[#448efe] cursor-text"
           } 
-          border-l-[1px] border-[#e1e1e8] placeholder:text-lg`}
+          border-l-[1px] border-[#e1e1e8] placeholder:text-xl`}
         />
       )}
     </div>
