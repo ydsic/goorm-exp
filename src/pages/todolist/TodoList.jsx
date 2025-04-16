@@ -72,11 +72,13 @@ export default function TodoList() {
                 className="w-full h-auto object-contain"
               />
             </div>
+            <div className="w-[50%] h-full flex flex-col items-start p-[2rem_2.4rem] rounded-[0.8rem] border border-[#c9d3d8] overflow-y-auto text-[1.6rem]">
             <TaskManager
               tasks={tasks}
               setTasks={setTasks}
               onDelete={handleDeleteTask}
             />
+            </div>
           </div>
         )}
       </div>
