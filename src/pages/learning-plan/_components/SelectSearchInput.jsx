@@ -24,7 +24,7 @@ const SelectSearchInput = ({
     <div className="relative">
       {/* 라벨 */}
       {label && (
-        <label className="block text-[#525463] mb-3 text-xl">
+        <label className="block text-[#525463] mb-3 text-2xl">
           {label} {required && <span className="text-[#D91C29]">*</span>}
         </label>
       )}
@@ -37,7 +37,7 @@ const SelectSearchInput = ({
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
-          className="w-full border rounded-lg px-5 py-3 outline-none bg-white border-l-[1px] border-[#e1e1e8] placeholder:text-lg focus:border-[#448efe] cursor-text"
+          className="w-full border rounded-lg px-5 py-3 outline-none bg-white border-l-[1px] border-[#e1e1e8] placeholder:text-xl focus:border-[#448efe] cursor-text"
           placeholder="검색하세요"
         />
 
@@ -60,7 +60,7 @@ const SelectSearchInput = ({
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black cursor-pointer"
         >
           <svg
             fill="currentColor"
@@ -81,7 +81,7 @@ const SelectSearchInput = ({
             <li
               key={index}
               onClick={() => handleSelect(item)}
-              className="px-4 py-2 cursor-pointer text-sm"
+              className="px-4 py-2 cursor-pointer text-xl"
             >
               {item}
             </li>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { NavLink, Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { differenceInCalendarDays } from "date-fns";
 
-const TaskManager = ({ tasks, setTasks, onDelete }) => {
+const TaskManager = ({ tasks, setTasks, onDelete, onEditComplete, showEditButton }) => {
   const [calendarDropdownIndex, setCalendarDropdownIndex] = useState(null);
   const [tempStartDate, setTempStartDate] = useState(null);
   const [tempEndDate, setTempEndDate] = useState(null);
@@ -54,17 +55,30 @@ const TaskManager = ({ tasks, setTasks, onDelete }) => {
   };
 
   return (
-    <div className="w-[50%] h-full flex flex-col items-start p-[2rem_2.4rem] rounded-[0.8rem] border border-[#c9d3d8] overflow-y-auto text-[1.6rem]">
-      <div className="w-full flex justify-between items-center mb-[2.4rem]">
+    <>
+      <div className="w-full flex justify-between items-center mb-[2.4rem] gap-[0.8rem]">
         <h2 className="text-[1.8rem] font-semibold">
           할 일 <span className="text-[#3b82f6]">{tasks.length}</span>
         </h2>
-        <button
-          onClick={addTask}
-          className="text-[1.4rem] px-[1.2rem] py-[0.6rem] border border-[#d1d5db] rounded-[0.6rem] bg-[#f9fafb] hover:bg-[#f3f4f6]"
-        >
-          + 태스크 추가
-        </button>
+        <div className="flex gap-[0.8rem]">
+          <button
+            onClick={addTask}
+            className="text-[1.4rem] px-[1.2rem] py-[0.6rem] border border-[#d1d5db] rounded-[0.6rem] bg-[#f9fafb] hover:bg-[#f3f4f6]"
+          >
+            + 태스크 추가
+          </button>
+          {showEditButton && (
+            <Link
+              to="/todolist"
+              onClick={() =>
+                localStorage.setItem("tasks", JSON.stringify(tasks))
+              }
+              className="text-[1.4rem] px-[1.2rem] py-[0.6rem] rounded-[0.6rem] bg-[#3b82f6] text-white hover:bg-[#2563eb] cursor-pointer"
+            >
+              수정
+            </Link>
+          )}
+        </div>
       </div>
 
       {tasks.length === 0 ? (
@@ -81,17 +95,16 @@ const TaskManager = ({ tasks, setTasks, onDelete }) => {
         tasks.map((task, index) => (
           <div
             key={index}
-            className="w-full flex items-start gap-[1.2rem] rounded-[1.2rem] p-[1.6rem] mb-[1.6rem] relative box-border hover:bg-[#f3f4f6]"
+            className="group w-full flex items-start gap-[1.2rem] rounded-[1.2rem] p-[1.6rem] mb-[1.6rem] relative box-border hover:bg-[#f3f4f6]"
           >
             <div className="flex flex-col mr-[0.8rem]">
               <div
-                className={`p-[0.4rem] rounded-[0.8rem] ${
-                  task.status === "completed"
-                    ? "bg-[rgba(4,163,126,0.16)]"
-                    : task.status === "inProgress"
+                className={`p-[0.4rem] rounded-[0.8rem] ${task.status === "completed"
+                  ? "bg-[rgba(4,163,126,0.16)]"
+                  : task.status === "inProgress"
                     ? "bg-[rgba(68,142,254,0.16)]"
                     : "bg-[rgba(108,110,126,0.16)]"
-                }`}
+                  }`}
               >
                 <div
                   onClick={() =>
@@ -99,13 +112,12 @@ const TaskManager = ({ tasks, setTasks, onDelete }) => {
                       index === statusDropdownIndex ? null : index
                     )
                   }
-                  className={`w-[1.2rem] h-[1.2rem] rounded-full cursor-pointer ${
-                    task.status === "completed"
-                      ? "bg-[#04A37E]"
-                      : task.status === "inProgress"
+                  className={`w-[1.2rem] h-[1.2rem] rounded-full cursor-pointer ${task.status === "completed"
+                    ? "bg-[#04A37E]"
+                    : task.status === "inProgress"
                       ? "bg-[#448EFE]"
                       : "bg-[#6C6E7E]"
-                  }`}
+                    }`}
                 />
               </div>
               {statusDropdownIndex === index && (
@@ -117,19 +129,18 @@ const TaskManager = ({ tasks, setTasks, onDelete }) => {
                       className="flex items-center gap-[0.6rem] px-[1.2rem] py-[0.6rem] text-[1.4rem] text-[#2b2d36] cursor-pointer hover:bg-[#f3f4f6]"
                     >
                       <div
-                        className={`w-[1.2rem] h-[1.2rem] rounded-full ${
-                          status === "completed"
-                            ? "bg-[#04A37E]"
-                            : status === "inProgress"
+                        className={`w-[1.2rem] h-[1.2rem] rounded-full ${status === "completed"
+                          ? "bg-[#04A37E]"
+                          : status === "inProgress"
                             ? "bg-[#448EFE]"
                             : "bg-[#6C6E7E]"
-                        }`}
+                          }`}
                       />
                       {status === "pending"
                         ? "시작전"
                         : status === "inProgress"
-                        ? "진행중"
-                        : "완료"}
+                          ? "진행중"
+                          : "완료"}
                     </div>
                   ))}
                 </div>
@@ -156,11 +167,10 @@ const TaskManager = ({ tasks, setTasks, onDelete }) => {
                 />
               ) : (
                 <div
-                  className={`text-[1.4rem] ${
-                    task.status === "completed"
-                      ? "line-through text-[#6b7280]"
-                      : ""
-                  }`}
+                  className={`text-[1.4rem] ${task.status === "completed"
+                    ? "line-through text-[#6b7280]"
+                    : ""
+                    }`}
                 >
                   {task.text}
                 </div>
@@ -248,7 +258,7 @@ const TaskManager = ({ tasks, setTasks, onDelete }) => {
           </div>
         ))
       )}
-    </div>
+    </>
   );
 };
 

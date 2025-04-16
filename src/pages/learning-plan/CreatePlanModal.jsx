@@ -30,7 +30,7 @@ const CreatePlanModal = ({ onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex justify-end transition-opacity duration-300">
       <div
-        className={`h-full w-9/20 bg-white shadow-[0_0_14px_rgba(0,0,0,0.15)] transform transition-all duration-300 ease-in-out   
+        className={`h-full w-12/22 bg-white shadow-[0_0_14px_rgba(0,0,0,0.15)] transform transition-all duration-300 ease-in-out   
     ${isVisible ? "translate-x-0" : "translate-x-full"}
     flex flex-col`}
       >
@@ -50,7 +50,7 @@ const CreatePlanModal = ({ onClose }) => {
         {/*콘텐츠 영역, 폼 내용 */}
         <div className="flex-1 overflow-y-auto space-y-8 px-8 py-8">
           <div>
-            <label className="text-3xl font-semibold">
+            <label className="text-4xl font-semibold">
               이번 학습에서는 어떤 것을 달성하실 건가요?
             </label>
           </div>
