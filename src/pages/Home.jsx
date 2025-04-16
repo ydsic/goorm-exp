@@ -1,9 +1,31 @@
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import Aside from "./Aside";
 
+import Aside from "./Aside";
 import DiaryData from "./diary/DirayData";
+import TaskManager from "./todolist/_components/TaskManager";
+
 
 export default function Home() {
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("tasks");
+    if (saved) setTasks(JSON.parse(saved));
+  }, []);
+
+  const handleEditComplete = () => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  };
+
+  const handleDeleteTask = (index) => {
+    const updated = [...tasks];
+    updated.splice(index, 1);
+    setTasks(updated);
+    localStorage.setItem("tasks", JSON.stringify(updated));
+  };
+
+
   return (
     <div className="w-screen h-screen flex">
       <div className="min-w-[300px]">
@@ -34,7 +56,7 @@ export default function Home() {
 
           <div className="w-[100%] flex px-[2.4rem] py-[1.6rem] justify-start items-center gap-[.8rem] bg-[var(--home-bookmark-color)] rounded-[.8rem]">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M16 9V4H17C17.55 4 18 3.55 18 3C18 2.45 17.55 2 17 2H7C6.45 2 6 2.45 6 3C6 3.55 6.45 4 7 4H8V9C8 10.66 6.66 12 5 12V14H10.97V21L11.97 22L12.97 21V14H19V12C17.34 12 16 10.66 16 9Z" fill="#525463" />
+              <path fillRule="evenodd" clipRule="evenodd" d="M16 9V4H17C17.55 4 18 3.55 18 3C18 2.45 17.55 2 17 2H7C6.45 2 6 2.45 6 3C6 3.55 6.45 4 7 4H8V9C8 10.66 6.66 12 5 12V14H10.97V21L11.97 22L12.97 21V14H19V12C17.34 12 16 10.66 16 9Z" fill="#525463" />
             </svg>
 
             <div className="px-3 py-[5px] bg-blue-500 rounded-[.8rem] flex justify-center items-center gap-1.5 overflow-hidden">
@@ -80,8 +102,14 @@ export default function Home() {
             </div>
 
             <div className="w-[70%] h-[480px] rounded-lg outline-1 outline-offset-[-1px] outline-gray-300 flex justify-center items-center overflow-hidden">
-              <div className="justify-start text-black text-4xl font-semibold font-['x_Variable']">
-                오늘할일
+              <div className="w-[100%] h-[100%] flex flex-col justify-start px-[2.4rem] py-[2.4rem] overflow-y-auto">
+                <TaskManager
+                  tasks={tasks}
+                  setTasks={setTasks}
+                  onDelete={handleDeleteTask}
+                  onEditComplete={handleEditComplete}
+                  showEditButton={true}
+                />
               </div>
             </div>
           </div>
