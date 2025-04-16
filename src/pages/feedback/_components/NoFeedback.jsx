@@ -2,7 +2,7 @@ import FeedbackButton from "./FeedbackButton";
 
 export default function NoFeedback({ onClick }) {
   return (
-    <div className="flex justify-center items-center flex-col h-fit min-h-[80rem] mb-40 border border-[#e1e1e8] rounded-3xl">
+    <div className="flex justify-center items-center flex-col h-fit min-h-[65rem] mb-40 border border-[#e1e1e8] rounded-3xl">
       <img
         src="/src/assets/svg/empty.svg"
         alt="전달 받은 피드백이 없는 아이콘"
