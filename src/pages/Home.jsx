@@ -4,27 +4,31 @@ import { NavLink } from "react-router-dom";
 import Aside from "./Aside";
 import DiaryData from "./diary/DirayData";
 import TaskManager from "./todolist/_components/TaskManager";
+import HomeBacklog from "./todolist/_components/HomeBacklog";
 
 
 export default function Home() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]); // TaskManager 관련
+  const [backlogTasks, setBacklogTasks] = useState([]); // HomeBacklog 관련
 
+  // TaskManager 관련
   useEffect(() => {
     const saved = localStorage.getItem("tasks");
     if (saved) setTasks(JSON.parse(saved));
   }, []);
 
+  // TaskManager 관련
   const handleEditComplete = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   };
 
+  // TaskManager 관련
   const handleDeleteTask = (index) => {
     const updated = [...tasks];
     updated.splice(index, 1);
     setTasks(updated);
     localStorage.setItem("tasks", JSON.stringify(updated));
   };
-
 
   return (
     <div className="w-screen h-screen flex">
@@ -90,8 +94,15 @@ export default function Home() {
           {/* 오늘 할 일 */}
           <div className="w-[100%] h-[48rem] self-stretch flex justify-between items-center box-border">
             <div className="w-[30%] h-[48rem] rounded-lg outline-1 outline-offset-[-1px] outline-gray-300 flex justify-center items-center gap-6 overflow-hidden">
-              <div className="justify-start text-black text-4xl font-semibold font-['x_Variable']">
-                백로그
+              <div className="w-[100%] h-[100%] min-w-[20rem] flex flex-col justify-start align-middle px-[2.4rem] py-[2.4rem] overflow-y-auto]">
+              <HomeBacklog
+                  backlogTasks={backlogTasks}
+                  setBacklogTasks={setBacklogTasks}
+                  moveToToday={(index) => {
+                    const task = backlogTasks[index];
+                    setTasks((prev) => [...prev, { ...task }]);
+                  }}
+                />
               </div>
             </div>
 
@@ -101,7 +112,7 @@ export default function Home() {
               </svg>
             </div>
 
-            <div className="w-[70%] h-[480px] rounded-lg outline-1 outline-offset-[-1px] outline-gray-300 flex justify-center items-center overflow-hidden">
+            <div className="w-[70%] h-[48rem] rounded-lg outline-1 outline-offset-[-1px] outline-gray-300 flex justify-center items-center overflow-hidden">
               <div className="w-[100%] h-[100%] flex flex-col justify-start px-[2.4rem] py-[2.4rem] overflow-y-auto">
                 <TaskManager
                   tasks={tasks}
