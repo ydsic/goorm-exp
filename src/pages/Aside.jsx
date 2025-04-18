@@ -41,7 +41,11 @@ export default function Aside() {
       <nav className="w-full flex flex-col gap-1.5 py-5">
         <NavItem to="/" icon={HomeIcon} label="홈" />
         <NavItem to="/todolist" icon={TodayIcon} label="오늘 할 일" />
-        <NavItem to="/learningplan" icon={LearningPlanIcon} label="학습 계획" />
+        <NavItem
+          to="/learning-plan"
+          icon={LearningPlanIcon}
+          label="학습 계획"
+        />
         <NavItem to="/diary" icon={DiaryIcon} label="배움일기" />
         <NavItem to="/feedback/received" icon={FeedbackIcon} label="피드백" />
       </nav>
