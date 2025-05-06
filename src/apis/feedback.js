@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5173";
+const API_URL = "http://localhost:5174";
 
 export async function getAllFeedbacks() {
   const res = await fetch(API_URL);

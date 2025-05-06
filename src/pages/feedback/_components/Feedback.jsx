@@ -5,34 +5,38 @@ import { useEffect, useState } from "react";
 import FeedbackButton from "./FeedbackButton";
 import FeedbackTabMenu from "./FeedbackTabMenu";
 import { useLocation } from "react-router-dom";
-import { createPortal } from "react-dom";
 import FeedbackList from "./FeedbackList";
-import { getAllFeedbacks } from "../../../apis/feedback";
 import { useOverlay } from "@toss/use-overlay";
-
-const initialFeedback = [
-  { username: "양아름", subject: "협업성", content: "안녕 하세륭" },
-  {
-    username: "이예도",
-    subject: "수행도",
-    content:
-      "안녕 하세륭 안녕 하세륭 안녕 하세륭 안녕 하세륭안녕 하세륭 안녕 하세륭",
-  },
-];
+import { loadFeedbacks, saveFeedbacks } from "../../../utils/localStorage";
 
 export default function Feedback() {
   const location = useLocation();
 
-  const [feedback, setFeedback] = useState(initialFeedback);
+  // 로컬스토리지에서 피드백 불러오기
+  const storedFeedbacks = loadFeedbacks();
+  const [feedback, setFeedback] = useState([storedFeedbacks]);
 
-  // useEffect(() => {
-  //   getAllFeedbacks().then((res) => setFeedback(res));
-  // }, []);
+  // 불러온 피드백 렌더링
+  useEffect(() => {
+    setFeedback(storedFeedbacks);
+  }, []);
 
+  // 피드백 추가 핸들러
+  const addFeedbackHandle = (newFeedback) => {
+    const updated = [...feedback, newFeedback];
+    setFeedback(updated);
+    saveFeedbacks(updated);
+  };
+
+  // 피드백 모달
   const overlay = useOverlay();
   const handleModalEvent = () => {
     overlay.open(({ isOpen, close }) => (
-      <ModalFeedback isOpen={isOpen} close={close} />
+      <ModalFeedback
+        isOpen={isOpen}
+        close={close}
+        onSubmit={(data) => addFeedbackHandle(data)}
+      />
     ));
   };
 
@@ -74,7 +78,7 @@ export default function Feedback() {
                   />
                 </div>
                 <button className="flex gap-3 items-center h-[3.2rem] px-6 text-2xl bg-[#e8e8ee] text-[#525463] rounded-md">
-                  2025년{" "}
+                  2025년
                   <img
                     src="/src/assets/svg/calendar-feedback.svg"
                     alt="feedback-calendar-icon"
@@ -82,7 +86,9 @@ export default function Feedback() {
                 </button>
               </div>
 
-              {feedback.length === 0 && <NoFeedback />}
+              {feedback.length === 0 && (
+                <NoFeedback onClick={handleModalEvent} />
+              )}
               {feedback && <FeedbackList initialValues={feedback} />}
             </div>
           </article>
