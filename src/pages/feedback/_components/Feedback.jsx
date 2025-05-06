@@ -3,14 +3,37 @@ import NoFeedback from "./NoFeedback";
 import ModalFeedback from "./ModalFeedback";
 import { useEffect, useState } from "react";
 import FeedbackButton from "./FeedbackButton";
+import FeedbackTabMenu from "./FeedbackTabMenu";
+import { useLocation } from "react-router-dom";
+import { createPortal } from "react-dom";
+import FeedbackList from "./FeedbackList";
+import { getAllFeedbacks } from "../../../apis/feedback";
+import { useOverlay } from "@toss/use-overlay";
+
+const initialFeedback = [
+  { username: "양아름", subject: "협업성", content: "안녕 하세륭" },
+  {
+    username: "이예도",
+    subject: "수행도",
+    content:
+      "안녕 하세륭 안녕 하세륭 안녕 하세륭 안녕 하세륭안녕 하세륭 안녕 하세륭",
+  },
+];
 
 export default function Feedback() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
+  const location = useLocation();
+
+  const [feedback, setFeedback] = useState(initialFeedback);
+
+  // useEffect(() => {
+  //   getAllFeedbacks().then((res) => setFeedback(res));
+  // }, []);
+
+  const overlay = useOverlay();
+  const handleModalEvent = () => {
+    overlay.open(({ isOpen, close }) => (
+      <ModalFeedback isOpen={isOpen} close={close} />
+    ));
   };
 
   return (
@@ -29,27 +52,10 @@ export default function Feedback() {
             <header>
               <div className="flex justify-between items-center mb-7">
                 <h3 className="font-bold text-4xl text-d">상시 피드백</h3>
-                <FeedbackButton onClick={openModal} text="피드백 하기" />
+                <FeedbackButton onClick={handleModalEvent} text="피드백 하기" />
               </div>
 
-              <ul className="flex items-center text-2xl gap-2.5 mb-8">
-                <li className="h-[3.3rem]">
-                  <a
-                    href="/feedback/received"
-                    className="flex items-center h-full px-5 bg-[#448efe3d] text-[#1959b8] text-[1.4rem] rounded-lg"
-                  >
-                    받은 내용
-                  </a>
-                </li>
-                <li className="h-[3.3rem]">
-                  <a
-                    href="/feedback/send"
-                    className="flex items-center h-full px-5 bg-[#6c6e7e14] opacity-90 text-[rgb(82, 84, 99)] text-[1.4rem] rounded-lg"
-                  >
-                    보낸 내용
-                  </a>
-                </li>
-              </ul>
+              <FeedbackTabMenu location={location} />
             </header>
 
             <div>
@@ -63,7 +69,7 @@ export default function Feedback() {
                   </span>
                   <input
                     type="text"
-                    className="pl-10 w-[33rem] h-[3.2rem] border text-lg border-[#e1e1e8] rounded-md"
+                    className="pl-10 w-[33rem] h-[3.2rem] border text-xl border-[#e1e1e8] rounded-md"
                     placeholder="멤버 혹은 그룹 이름으로 검색해 주세요."
                   />
                 </div>
@@ -76,13 +82,12 @@ export default function Feedback() {
                 </button>
               </div>
 
-              <NoFeedback onClick={openModal} />
+              {feedback.length === 0 && <NoFeedback />}
+              {feedback && <FeedbackList initialValues={feedback} />}
             </div>
           </article>
         </div>
       </div>
-
-      <ModalFeedback open={modalOpen} close={closeModal} />
     </div>
   );
 }
