@@ -21,9 +21,11 @@ export default function ModalFeedback({ isOpen, close }) {
       username: username?.value || "",
       subject: subject?.value || "",
       content,
+      createdAt: new Date().toISOString(),
     };
     saveFeedbacks(feedbackData);
     close();
+    window.location.reload();
     console.log("성공", username, subject, content);
   };
 

@@ -1,4 +1,11 @@
-export default function FeedbackItem({ username, subject, content }) {
+import { formatTimeAgo } from "../../../utils/formatTimeAgo";
+
+export default function FeedbackItem({
+  username,
+  subject,
+  content,
+  createdAt,
+}) {
   return (
     <div className="flex flex-col gap-7 w-full p-6 border border-[#e1e1e8] rounded-2xl">
       <div className="flex items-start justify-between">
@@ -19,7 +26,9 @@ export default function FeedbackItem({ username, subject, content }) {
                 {subject}
               </span>
             </div>
-            <span className="text-lg text-[#9395a4]">1분 전</span>
+            <span className="text-lg text-[#9395a4]">
+              {formatTimeAgo(createdAt)}
+            </span>
           </div>
         </div>
         <div className="flex items-center gap-2">
