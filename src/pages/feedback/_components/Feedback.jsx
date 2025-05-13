@@ -17,25 +17,16 @@ export default function Feedback() {
   // 모달 상태여부
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 로컬스토리지에서 피드백 불러오기
-  const storedFeedbacks = loadFeedbacks();
-  const [feedback, setFeedback] = useState([storedFeedbacks]);
+  // 피드백 데이터 초기로딩
+  const [feedback, setFeedback] = useState(() => loadFeedbacks());
 
-  // 불러온 피드백 렌더링
+  // 피드백 데이터 갱신
   useEffect(() => {
-    setFeedback(storedFeedbacks);
-  }, []);
-
-  // 1분마다 페이지 렌더링
-  useEffect(() => {
-    let interval = null;
-
-    if (!isModalOpen && feedback.length !== 0) {
-      interval = setInterval(() => {
-        window.location.reload();
-      }, 60 * 1000);
-    }
-
+    if (isModalOpen) return;
+    const interval = setInterval(() => {
+      const updated = loadFeedbacks();
+      setFeedback(updated);
+    }, 60 * 1000);
     return () => clearInterval(interval);
   }, [isModalOpen]);
 
