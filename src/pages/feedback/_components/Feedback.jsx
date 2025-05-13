@@ -4,13 +4,13 @@ import ModalFeedback from "./ModalFeedback";
 import { useEffect, useState } from "react";
 import FeedbackButton from "./FeedbackButton";
 import FeedbackTabMenu from "./FeedbackTabMenu";
-import { useLocation } from "react-router-dom";
 import FeedbackList from "./FeedbackList";
 import { useOverlay } from "@toss/use-overlay";
 import { loadFeedbacks, saveFeedbacks } from "../../../utils/localStorage";
 
 export default function Feedback() {
-  const location = useLocation();
+  // 모달 상태여부
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 로컬스토리지에서 피드백 불러오기
   const storedFeedbacks = loadFeedbacks();
@@ -20,6 +20,19 @@ export default function Feedback() {
   useEffect(() => {
     setFeedback(storedFeedbacks);
   }, []);
+
+  // 1분마다 페이지 렌더링
+  useEffect(() => {
+    let interval = null;
+
+    if (!isModalOpen && feedback.length !== 0) {
+      interval = setInterval(() => {
+        window.location.reload();
+      }, 60 * 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [isModalOpen]);
 
   // 피드백 추가 핸들러
   const addFeedbackHandle = (newFeedback) => {
@@ -31,11 +44,17 @@ export default function Feedback() {
   // 피드백 모달
   const overlay = useOverlay();
   const handleModalEvent = () => {
+    setIsModalOpen(true); // 모달 열림상태 설정
+
     overlay.open(({ isOpen, close }) => (
       <ModalFeedback
         isOpen={isOpen}
+        setIsModalOpen={false}
         close={close}
-        onSubmit={(data) => addFeedbackHandle(data)}
+        onSubmit={(data) => {
+          addFeedbackHandle(data);
+          setIsModalOpen(false);
+        }}
       />
     ));
   };
@@ -59,7 +78,7 @@ export default function Feedback() {
                 <FeedbackButton onClick={handleModalEvent} text="피드백 하기" />
               </div>
 
-              <FeedbackTabMenu location={location} />
+              <FeedbackTabMenu />
             </header>
 
             <div>
