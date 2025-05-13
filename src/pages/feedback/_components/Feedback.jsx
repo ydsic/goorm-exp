@@ -25,7 +25,7 @@ export default function Feedback() {
   useEffect(() => {
     let interval = null;
 
-    if (!isModalOpen) {
+    if (!isModalOpen && feedback.length !== 0) {
       interval = setInterval(() => {
         window.location.reload();
       }, 60 * 1000);
