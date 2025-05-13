@@ -7,8 +7,13 @@ import FeedbackTabMenu from "./FeedbackTabMenu";
 import FeedbackList from "./FeedbackList";
 import { useOverlay } from "@toss/use-overlay";
 import { loadFeedbacks, saveFeedbacks } from "../../../utils/localStorage";
+import SearchInput from "./SearchInput";
+import useSearchFeedback from "../../../hooks/useSearchFeedback";
 
 export default function Feedback() {
+  const { query, filteredFeedbacks, suggestions, updateQuery } =
+    useSearchFeedback();
+
   // 모달 상태여부
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -83,19 +88,11 @@ export default function Feedback() {
 
             <div>
               <div className="flex justify-between items-center mb-8">
-                <div className="relative">
-                  <span className="block absolute top-3 left-2">
-                    <img
-                      src="/src/assets/svg/search-black.svg"
-                      alt="피드백 리스트 검색 아이콘"
-                    />
-                  </span>
-                  <input
-                    type="text"
-                    className="pl-10 w-[33rem] h-[3.2rem] border text-xl border-[#e1e1e8] rounded-md"
-                    placeholder="멤버 혹은 그룹 이름으로 검색해 주세요."
-                  />
-                </div>
+                <SearchInput
+                  query={query}
+                  suggestions={suggestions}
+                  onSearch={updateQuery}
+                />
                 <button className="flex gap-3 items-center h-[3.2rem] px-6 text-2xl bg-[#e8e8ee] text-[#525463] rounded-md">
                   2025년
                   <img
@@ -105,10 +102,11 @@ export default function Feedback() {
                 </button>
               </div>
 
-              {feedback.length === 0 && (
+              {feedback.length === 0 && filteredFeedbacks.length === 0 ? (
                 <NoFeedback onClick={handleModalEvent} />
+              ) : (
+                <FeedbackList initialValues={feedback} />
               )}
-              {feedback && <FeedbackList initialValues={feedback} />}
             </div>
           </article>
         </div>
