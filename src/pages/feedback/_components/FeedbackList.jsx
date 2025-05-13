@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import FeedbackItem from "./FeedbackItem";
 
 export default function FeedbackList(feedbackArr) {

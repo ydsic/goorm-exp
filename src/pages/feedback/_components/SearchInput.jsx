@@ -1,58 +1,49 @@
 import { useEffect, useRef, useState } from "react";
+import { useAutoComplete } from "../../../hooks/useAutoComplete";
+import AutoCompleteList from "./AutoCompleteList";
 
-function useDebouncedValue(value, delay = 300) {
-  const [debounced, setDebounced] = useState(value);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebounced(value);
-    }, delay);
-
-    return () => clearTimeout(handler);
-  }, [value, delay]);
-
-  return debounced;
-}
-
-export default function SearchInput({ query, suggestions, onSearch }) {
-  const [inputValue, setInputValue] = useState(query);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [highlightIndex, setHighlightIndex] = useState(-1);
-  const inputRef = useRef(null);
-
-  const debouncedInput = useDebouncedValue(inputValue, 200);
+export default function SearchInput({ query, suggestions = [], onSearch }) {
+  const inputRef = useRef();
+  const {
+    input,
+    setInput,
+    isOpen,
+    setIsOpen,
+    filtered,
+    highlightIndex,
+    moveHighlight,
+    selectHighlight,
+  } = useAutoComplete(suggestions);
 
   useEffect(() => {
-    onSearch(debouncedInput);
-  }, [debouncedInput]);
+    setInput(query || "");
+  }, [query]);
 
   const handleKeyDown = (e) => {
-    if (!suggestions.length) return;
-
-    if (e.key === "ArrowDown") {
-      setHighlightIndex((prev) =>
-        prev < suggestions.length - 1 ? prev + 1 : 0
-      );
-    } else if (e.key === "ArrowUp") {
-      setHighlightIndex((prev) =>
-        prev > 0 ? prev - 1 : suggestions.length - 1
-      );
-    } else if (e.key === "Enter") {
-      if (highlightIndex >= 0 && suggestions[highlightIndex]) {
-        const selected = suggestions[highlightIndex];
-
-        setInputValue(selected);
+    if (e.key === "ArrowDown") moveHighlight("down");
+    else if (e.key === "ArrowUp") moveHighlight("up");
+    else if (e.key === "Enter") {
+      const selected = selectHighlight();
+      if (selected) {
+        setInput(selected);
         onSearch(selected);
-        setShowSuggestions(flase);
-        setHighlightIndex(-1);
+        setIsOpen(false);
+      } else {
+        onSearch(input);
       }
     }
   };
 
-  const handleSuggestionClick = (suggestion) => {
-    setInputValue(suggestion);
-    onSearch(suggestion);
-    setShowSuggestions(false);
+  const handleChange = (e) => {
+    const newVal = e.target.value;
+    setInput(newVal);
+    onSearch(newVal);
+  };
+
+  const handleSelect = (item) => {
+    setInput(item);
+    onSearch(item);
+    setIsOpen(false);
   };
 
   return (
@@ -66,32 +57,21 @@ export default function SearchInput({ query, suggestions, onSearch }) {
       <input
         ref={inputRef}
         type="text"
-        value={inputValue}
+        value={input}
         className="pl-10 w-[33rem] h-[3.2rem] border text-xl border-[#e1e1e8] rounded-md"
         placeholder="멤버 혹은 그룹 이름으로 검색해 주세요."
-        onChange={(e) => {
-          setInputValue(e.target.value);
-          setHighlightIndex(-1);
-        }}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
-        onFocus={() => setShowSuggestions(true)}
-        onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+        onFocus={() => setIsOpen(true)}
+        onBlur={() => setTimeout(() => setIsOpen(false), 100)}
       />
 
-      {showSuggestions && suggestions.length > 0 && (
-        <ul className="absolute top-[3.5rem] left-0 w-full bg-white border border-[#ccc] rounded-md z-10 shadow-lg max-h-[200px] overflow-y-auto">
-          {suggestions.map((suggestion, i) => (
-            <li
-              key={i}
-              className={`px-4 py-2 cursor-pointer text-xl ${
-                highlightIndex === i ? "bg-blue-100 font-semibold" : ""
-              }`}
-              onMouseDown={() => handleSuggestionClick(suggestion)}
-            >
-              {suggestion}
-            </li>
-          ))}
-        </ul>
+      {isOpen && (
+        <AutoCompleteList
+          items={filtered}
+          highlightIndex={highlightIndex}
+          onSelect={handleSelect}
+        />
       )}
     </div>
   );

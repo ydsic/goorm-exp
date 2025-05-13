@@ -102,10 +102,14 @@ export default function Feedback() {
                 </button>
               </div>
 
-              {feedback.length === 0 && filteredFeedbacks.length === 0 ? (
+              {feedback.length === 0 ? (
                 <NoFeedback onClick={handleModalEvent} />
+              ) : filteredFeedbacks.length === 0 ? (
+                <p className="text-xl text-gray-500 py-10">
+                  검색 결과가 없습니다.
+                </p>
               ) : (
-                <FeedbackList initialValues={feedback} />
+                <FeedbackList initialValues={filteredFeedbacks} />
               )}
             </div>
           </article>
