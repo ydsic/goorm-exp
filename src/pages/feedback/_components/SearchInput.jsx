@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useAutoComplete } from "../../../hooks/useAutoComplete";
 import AutoCompleteList from "./AutoCompleteList";
+import useDebounced from "../../../hooks/useDebounced";
 
 export default function SearchInput({ query, suggestions = [], onSearch }) {
   const inputRef = useRef();
@@ -15,9 +16,14 @@ export default function SearchInput({ query, suggestions = [], onSearch }) {
     selectHighlight,
   } = useAutoComplete(suggestions);
 
-  useEffect(() => {
-    setInput(query || "");
-  }, [query]);
+  // 디바운스 hooks
+  const debouncedSearch = useDebounced(onSearch, 300, [onSearch]);
+
+  const handleChange = (e) => {
+    const newVal = e.target.value;
+    setInput(newVal);
+    debouncedSearch(newVal);
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "ArrowDown") moveHighlight("down");
@@ -28,16 +34,8 @@ export default function SearchInput({ query, suggestions = [], onSearch }) {
         setInput(selected);
         onSearch(selected);
         setIsOpen(false);
-      } else {
-        onSearch(input);
       }
     }
-  };
-
-  const handleChange = (e) => {
-    const newVal = e.target.value;
-    setInput(newVal);
-    onSearch(newVal);
   };
 
   const handleSelect = (item) => {

@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { loadFeedbacks } from "../utils/localStorage";
 
 export default function useSearchFeedback() {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("q") || "";
-  const [filtered, setFiltered] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
 
   const allFeedbacks = loadFeedbacks();
 
-  useEffect(() => {
+  // 필터 최적화
+  const filteredFeedbacks = useMemo(() => {
     const lowerQuery = query.toLowerCase();
-    const filteredData = allFeedbacks.filter(
+    return allFeedbacks.filter(
       (item) =>
         item.username.toLowerCase().includes(lowerQuery) ||
         item.content.toLowerCase().includes(lowerQuery)
     );
+  }, [query, allFeedbacks]);
 
-    const uniqueSuggestions = [
+  // 자동완성 최적화
+  const suggestions = useMemo(() => {
+    const lowerQuery = query.toLowerCase();
+    return [
       ...new Set(
         allFeedbacks
           .map((item) => item.username)
           .filter((name) => name.toLowerCase().includes(lowerQuery))
       ),
     ];
-
-    setFiltered(filteredData);
-    setSuggestions(uniqueSuggestions);
-  }, [query]);
+  }, [query, allFeedbacks]);
 
   const updateQuery = (newQuery) => {
     setSearchParams({ q: newQuery });
@@ -36,7 +36,7 @@ export default function useSearchFeedback() {
 
   return {
     query,
-    filteredFeedbacks: filtered,
+    filteredFeedbacks,
     suggestions,
     updateQuery,
   };
