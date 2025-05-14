@@ -1,36 +1,44 @@
 import Aside from "../../Aside";
 import NoFeedback from "./NoFeedback";
 import ModalFeedback from "./ModalFeedback";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import FeedbackButton from "./FeedbackButton";
 import FeedbackTabMenu from "./FeedbackTabMenu";
 import FeedbackList from "./FeedbackList";
 import { useOverlay } from "@toss/use-overlay";
 import { loadFeedbacks, saveFeedbacks } from "../../../utils/localStorage";
+import SearchInput from "./SearchInput";
+import useSearchFeedback from "../../../hooks/useSearchFeedback";
 
 export default function Feedback() {
+  const { query, category, setQuery } = useSearchFeedback();
+  // 피드백 데이터 초기로딩
+  const [feedback, setFeedback] = useState(() => loadFeedbacks());
+
+  const suggestions = useMemo(() => {
+    return [...new Set(feedback.map((f) => f.username).filter(Boolean))];
+  }, [feedback]);
+
+  // 필터링 ( 카테고리 + 검색어 )
+  const filteredFeedbacks = useMemo(() => {
+    return feedback
+      .filter((item) =>
+        category === "all" ? true : item.category === category
+      )
+      .filter((item) => (query === "" ? true : item.username?.includes(query)))
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }, [feedback, category, query]);
+
   // 모달 상태여부
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 로컬스토리지에서 피드백 불러오기
-  const storedFeedbacks = loadFeedbacks();
-  const [feedback, setFeedback] = useState([storedFeedbacks]);
-
-  // 불러온 피드백 렌더링
+  // 피드백 데이터 갱신
   useEffect(() => {
-    setFeedback(storedFeedbacks);
-  }, []);
-
-  // 1분마다 페이지 렌더링
-  useEffect(() => {
-    let interval = null;
-
-    if (!isModalOpen && feedback.length !== 0) {
-      interval = setInterval(() => {
-        window.location.reload();
-      }, 60 * 1000);
-    }
-
+    if (isModalOpen) return;
+    const interval = setInterval(() => {
+      const updated = loadFeedbacks();
+      setFeedback(updated);
+    }, 60 * 1000);
     return () => clearInterval(interval);
   }, [isModalOpen]);
 
@@ -83,19 +91,11 @@ export default function Feedback() {
 
             <div>
               <div className="flex justify-between items-center mb-8">
-                <div className="relative">
-                  <span className="block absolute top-3 left-2">
-                    <img
-                      src="/src/assets/svg/search-black.svg"
-                      alt="피드백 리스트 검색 아이콘"
-                    />
-                  </span>
-                  <input
-                    type="text"
-                    className="pl-10 w-[33rem] h-[3.2rem] border text-xl border-[#e1e1e8] rounded-md"
-                    placeholder="멤버 혹은 그룹 이름으로 검색해 주세요."
-                  />
-                </div>
+                <SearchInput
+                  query={query}
+                  suggestions={suggestions}
+                  onSearch={setQuery}
+                />
                 <button className="flex gap-3 items-center h-[3.2rem] px-6 text-2xl bg-[#e8e8ee] text-[#525463] rounded-md">
                   2025년
                   <img
@@ -105,10 +105,15 @@ export default function Feedback() {
                 </button>
               </div>
 
-              {feedback.length === 0 && (
+              {feedback.length === 0 ? (
                 <NoFeedback onClick={handleModalEvent} />
+              ) : filteredFeedbacks.length === 0 ? (
+                <p className="text-xl text-gray-500 py-10">
+                  검색 결과가 없습니다.
+                </p>
+              ) : (
+                <FeedbackList initialValues={filteredFeedbacks} />
               )}
-              {feedback && <FeedbackList initialValues={feedback} />}
             </div>
           </article>
         </div>

@@ -39,16 +39,6 @@ const router = createBrowserRouter([
       {
         path: "feedback",
         element: <FeedbackPage />,
-        children: [
-          {
-            path: "received",
-            element: <Feedback />,
-          },
-          {
-            path: "send",
-            element: <Feedback />,
-          },
-        ],
       },
     ],
   },
