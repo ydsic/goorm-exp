@@ -47,7 +47,11 @@ export default function Aside() {
           label="학습 계획"
         />
         <NavItem to="/diary" icon={DiaryIcon} label="배움일기" />
-        <NavItem to="/feedback/received" icon={FeedbackIcon} label="피드백" />
+        <NavItem
+          to={`/feedback?category=all&q=`}
+          icon={FeedbackIcon}
+          label="피드백"
+        />
       </nav>
     </aside>
   );

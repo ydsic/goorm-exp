@@ -3,7 +3,7 @@ import { useAutoComplete } from "../../../hooks/useAutoComplete";
 import AutoCompleteList from "./AutoCompleteList";
 import useDebounced from "../../../hooks/useDebounced";
 
-export default function SearchInput({ query, suggestions = [], onSearch }) {
+export default function SearchInput({ suggestions, onSearch }) {
   const inputRef = useRef();
   const {
     input,
@@ -64,7 +64,7 @@ export default function SearchInput({ query, suggestions = [], onSearch }) {
         onBlur={() => setTimeout(() => setIsOpen(false), 100)}
       />
 
-      {isOpen && (
+      {isOpen && filtered.length > 0 && (
         <AutoCompleteList
           items={filtered}
           highlightIndex={highlightIndex}

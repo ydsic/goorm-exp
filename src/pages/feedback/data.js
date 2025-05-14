@@ -21,3 +21,10 @@ export const userOptions = [
   { value: "양아름", label: "양아름" },
 ];
 export const userPlaceholder = "학생 또는 그룹을 선택해주세요.";
+
+export const categories = [
+  { name: "전체", key: "all" },
+  { name: "협업성", key: "collaboration" },
+  { name: "수행도", key: "performance" },
+  { name: "커뮤니케이션", key: "communication" },
+];

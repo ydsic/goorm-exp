@@ -1,15 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 // 검색어 로직 담당 훅
-export function useAutoComplete(options, delay = 200) {
-  const [input, setInput] = useState("");
+export function useAutoComplete(options, initial = "") {
+  const [input, setInput] = useState(initial);
   const [highlightIndex, setHighlightIndex] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);
 
   // 디바운싱
   const filtered = useMemo(() => {
     const lower = input.toLowerCase();
-    return options.filter((opt) => opt.toLowerCase().includes(lower));
+    return options
+      .filter((opt) => typeof opt === "string")
+      .filter((opt) => opt.toLowerCase().includes(lower));
   }, [input, options]);
 
   const moveHighlight = (direction) => {

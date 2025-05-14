@@ -1,7 +1,7 @@
 import Aside from "../../Aside";
 import NoFeedback from "./NoFeedback";
 import ModalFeedback from "./ModalFeedback";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import FeedbackButton from "./FeedbackButton";
 import FeedbackTabMenu from "./FeedbackTabMenu";
 import FeedbackList from "./FeedbackList";
@@ -11,14 +11,26 @@ import SearchInput from "./SearchInput";
 import useSearchFeedback from "../../../hooks/useSearchFeedback";
 
 export default function Feedback() {
-  const { query, filteredFeedbacks, suggestions, updateQuery } =
-    useSearchFeedback();
+  const { query, category, setQuery } = useSearchFeedback();
+  // 피드백 데이터 초기로딩
+  const [feedback, setFeedback] = useState(() => loadFeedbacks());
+
+  const suggestions = useMemo(() => {
+    return [...new Set(feedback.map((f) => f.username).filter(Boolean))];
+  }, [feedback]);
+
+  // 필터링 ( 카테고리 + 검색어 )
+  const filteredFeedbacks = useMemo(() => {
+    return feedback
+      .filter((item) =>
+        category === "all" ? true : item.category === category
+      )
+      .filter((item) => (query === "" ? true : item.username?.includes(query)))
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }, [feedback, category, query]);
 
   // 모달 상태여부
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // 피드백 데이터 초기로딩
-  const [feedback, setFeedback] = useState(() => loadFeedbacks());
 
   // 피드백 데이터 갱신
   useEffect(() => {
@@ -82,7 +94,7 @@ export default function Feedback() {
                 <SearchInput
                   query={query}
                   suggestions={suggestions}
-                  onSearch={updateQuery}
+                  onSearch={setQuery}
                 />
                 <button className="flex gap-3 items-center h-[3.2rem] px-6 text-2xl bg-[#e8e8ee] text-[#525463] rounded-md">
                   2025년
