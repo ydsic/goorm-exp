@@ -1,16 +1,16 @@
 import Select from "react-select";
-import {
-  subjectOptions,
-  subjectPlaceholder,
-  userOptions,
-  userPlaceholder,
-} from "../data";
+import { userOptions, userPlaceholder } from "../../../data/data";
 import { useState } from "react";
 import { saveFeedbacks } from "../../../utils/localStorage";
+import {
+  categoryOptions,
+  categoryPlaceholder,
+  getCategoryKey,
+} from "../../../data/category";
 
 export default function ModalFeedback({ isOpen, close }) {
   const [username, setUsername] = useState(null);
-  const [subject, setSubject] = useState(null);
+  const [category, setCategory] = useState(null);
   const [content, setContent] = useState("");
 
   const handleFeedbackSubmit = (e) => {
@@ -19,14 +19,14 @@ export default function ModalFeedback({ isOpen, close }) {
     const feedbackData = {
       id: id + 1,
       username: username?.value || "",
-      subject: subject?.value || "",
+      category: getCategoryKey(category?.value) || "",
       content,
       createdAt: new Date().toISOString(),
     };
     saveFeedbacks(feedbackData);
     close();
     window.location.reload();
-    console.log("성공", username, subject, content);
+    console.log("성공", username, category, content);
   };
 
   if (!isOpen) return null;
@@ -62,9 +62,9 @@ export default function ModalFeedback({ isOpen, close }) {
               </label>
               <Select
                 className="rounded-2xl"
-                options={subjectOptions}
-                onChange={(seleted) => setSubject(seleted)}
-                placeholder={subjectPlaceholder}
+                options={categoryOptions}
+                onChange={(seleted) => setCategory(seleted)}
+                placeholder={categoryPlaceholder}
               />
             </div>
 
@@ -87,7 +87,7 @@ export default function ModalFeedback({ isOpen, close }) {
             <button
               type="submit"
               // disabled
-              className="px-6 h-[4rem] rounded-lg text-2xl bg-[#5f9dfa] text-white"
+              className="px-6 h-[4rem] rounded-lg text-2xl bg-[#5f9dfa] text-white cursor-pointer"
             >
               전달하기
             </button>

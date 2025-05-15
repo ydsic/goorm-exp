@@ -1,7 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
-import { categories } from "../data";
 import clsx from "clsx";
 import useSearchFeedback from "../../../hooks/useSearchFeedback";
+import { categories } from "../../../data/category";
 
 export default function FeedbackTabMenu() {
   const { category, setCategory } = useSearchFeedback();

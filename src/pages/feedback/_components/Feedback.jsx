@@ -86,7 +86,7 @@ export default function Feedback() {
                 <FeedbackButton onClick={handleModalEvent} text="피드백 하기" />
               </div>
 
-              <FeedbackTabMenu />
+              {feedback.length > 0 && <FeedbackTabMenu />}
             </header>
 
             <div>
