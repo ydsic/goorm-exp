@@ -9,6 +9,7 @@ import { useOverlay } from "@toss/use-overlay";
 import { loadFeedbacks, saveFeedbacks } from "../../../utils/localStorage";
 import SearchInput from "./SearchInput";
 import useSearchFeedback from "../../../hooks/useSearchFeedback";
+import { CalendarIcon } from "../../../_components/icons/calendar";
 
 export default function Feedback() {
   const { query, category, setQuery } = useSearchFeedback();
@@ -86,7 +87,7 @@ export default function Feedback() {
                 <FeedbackButton onClick={handleModalEvent} text="피드백 하기" />
               </div>
 
-              <FeedbackTabMenu />
+              {feedback.length > 0 && <FeedbackTabMenu />}
             </header>
 
             <div>
@@ -98,10 +99,7 @@ export default function Feedback() {
                 />
                 <button className="flex gap-3 items-center h-[3.2rem] px-6 text-2xl bg-[#e8e8ee] text-[#525463] rounded-md">
                   2025년
-                  <img
-                    src="/src/assets/svg/calendar-feedback.svg"
-                    alt="feedback-calendar-icon"
-                  />
+                  <CalendarIcon />
                 </button>
               </div>
 

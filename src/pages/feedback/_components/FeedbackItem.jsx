@@ -1,32 +1,38 @@
 import { memo } from "react";
 import { useFormatTimeAgo } from "../../../utils/formatTimeAgo";
+import { categoryColors } from "../../../data/category";
+import { LogoIcon } from "../../../_components/icons/logo";
 
 const FeedbackItem = memo(function FeedbackItem({
   username,
-  subject,
+  category,
   content,
   createdAt,
 }) {
   const timeAgo = useFormatTimeAgo(createdAt);
+  const categoryBgColor = categoryColors[category];
 
   return (
     <div className="flex flex-col gap-7 w-full p-6 border border-[#e1e1e8] rounded-2xl">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           <div className=" w-[40px] h-[40px] rounded-b-full">
-            <img
+            <LogoIcon />
+            {/* <img
               src="/src/assets/img/aside_logo.png"
               alt="사용자 이미지"
               className="block w-full"
-            />
+            /> */}
           </div>
           <div>
             <div className="flex items-center gap-4 mb-0.5">
               <span className="block font-semibold text-xl text-[#9395a4]">
                 {username}
               </span>
-              <span className="block px-3 h-[24px] leading-[24px] text-lg text-[#fff] bg-[#3e404c29] rounded-md">
-                {subject}
+              <span
+                className={`block px-3 h-[24px] leading-[24px] text-lg text-[#9395a4] ${categoryBgColor} rounded-md`}
+              >
+                {category}
               </span>
             </div>
             <span className="text-lg text-[#9395a4]">{timeAgo}</span>
