@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useFormatTimeAgo } from "../../../utils/formatTimeAgo";
 import { categoryColors } from "../../../data/category";
+import { LogoIcon } from "../../../_components/icons/logo";
 
 const FeedbackItem = memo(function FeedbackItem({
   username,
@@ -16,11 +17,12 @@ const FeedbackItem = memo(function FeedbackItem({
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           <div className=" w-[40px] h-[40px] rounded-b-full">
-            <img
+            <LogoIcon />
+            {/* <img
               src="/src/assets/img/aside_logo.png"
               alt="사용자 이미지"
               className="block w-full"
-            />
+            /> */}
           </div>
           <div>
             <div className="flex items-center gap-4 mb-0.5">

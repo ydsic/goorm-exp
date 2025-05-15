@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useAutoComplete } from "../../../hooks/useAutoComplete";
 import AutoCompleteList from "./AutoCompleteList";
 import useDebounced from "../../../hooks/useDebounced";
+import { SearchIcon } from "../../../_components/icons/search";
 
 export default function SearchInput({ suggestions, onSearch }) {
   const inputRef = useRef();
@@ -47,10 +48,7 @@ export default function SearchInput({ suggestions, onSearch }) {
   return (
     <div className="relative">
       <span className="block absolute top-3 left-2">
-        <img
-          src="/src/assets/svg/search-black.svg"
-          alt="피드백 리스트 검색 아이콘"
-        />
+        <SearchIcon />
       </span>
       <input
         ref={inputRef}
